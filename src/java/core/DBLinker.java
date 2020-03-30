@@ -166,7 +166,7 @@ public abstract class DBLinker {
         return invitatii;
     }
 
-    static ArrayList<Invitatie> getInvitatii(int id_companie) throws SQLException {
+   public static ArrayList<Invitatie> getInvitatii(int id_companie) throws SQLException {
         init();
         ArrayList<Invitatie> invitatii = new ArrayList<>();
         String queryString = ("select * from `timetracking`.`" + "invitatii" + "`" + " where id_companie = '" + id_companie + "' ;");

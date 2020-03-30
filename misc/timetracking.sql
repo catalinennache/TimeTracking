@@ -21,7 +21,7 @@ USE `timetracking` ;
 -- Table `timetracking`.`proiecte`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `timetracking`.`proiecte` (
-  `cod_proiect` VARCHAR(16) NOT NULL,
+  `cod_proiect` VARCHAR(16) NOT NULL UNIQUE,
   `nume` VARCHAR(45) NULL,
   `data_creare` DATETIME NULL,
   `urmatorul_milestone` DATETIME NULL,
@@ -33,8 +33,8 @@ ENGINE = InnoDB;
 -- Table `timetracking`.`Companii`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `timetracking`.`Companii` (
-  `id_companie` INT NOT NULL,
-  `user` VARCHAR(45) NOT NULL,
+  `id_companie` INT NOT NULL AUTO_INCREMENT,
+  `user` VARCHAR(45) NOT NULL UNIQUE,
   `parola` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_companie`))
 ENGINE = InnoDB;
@@ -44,7 +44,7 @@ ENGINE = InnoDB;
 -- Table `timetracking`.`Invitatii`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `timetracking`.`Invitatii` (
-  `id_invitatie` VARCHAR(64) NOT NULL,
+  `id_invitatie` VARCHAR(64) NOT NULL UNIQUE,
   `invitatie_folosita` TINYINT(1) NOT NULL DEFAULT 0,
   `id_companie` INT NULL,
   PRIMARY KEY (`id_invitatie`),
@@ -64,7 +64,7 @@ ENGINE = InnoDB;
 -- Table `timetracking`.`Angajati`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `timetracking`.`Angajati` (
-  `id_angajat` INT NOT NULL,
+  `id_angajat` INT NOT NULL AUTO_INCREMENT,
   `id_invitatie` VARCHAR(64) NULL,
   `nickname` VARCHAR(45) NULL,
   `email` VARCHAR(45) NULL,
@@ -85,7 +85,7 @@ ENGINE = InnoDB;
 -- Table `timetracking`.`angajat_proiect`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `timetracking`.`angajat_proiect` (
-  `id_ap` INT NOT NULL,
+  `id_ap` INT NOT NULL AUTO_INCREMENT,
   `id_angajat` INT NOT NULL,
   `cod_proiect` VARCHAR(16) NOT NULL,
   `data_inrolarii` DATETIME NOT NULL,
@@ -109,7 +109,7 @@ ENGINE = InnoDB;
 -- Table `timetracking`.`sesiuni`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `timetracking`.`sesiuni` (
-  `id_sesiune` INT NOT NULL,
+  `id_sesiune` INT NOT NULL AUTO_INCREMENT,
   `timestamp_inceput` DATETIME NOT NULL,
   `timestamp_final` DATETIME NULL,
   `id_ap` INT NOT NULL,
