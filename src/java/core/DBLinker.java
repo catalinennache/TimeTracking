@@ -341,4 +341,44 @@ public abstract class DBLinker {
     }
       
       
+       public static Proiect getProiect(String cod_proiect) throws SQLException {
+        init();
+        Proiect proiect = null;
+        String queryString = ("select * from `timetracking`.`" + "proiecte" + "`" + " where cod_proiect = '" + cod_proiect + "'" + ";");
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        while (rezultate.next()) {
+          
+            String nume=rezultate.getString("nume");
+            long data_creare=rezultate.getLong("data_creare");
+           
+           
+            proiect = new Proiect(cod_proiect, nume, data_creare);
+        }
+
+        return proiect;
+    }
+       
+       public static ArrayList<Proiect> getProiect() throws SQLException {
+        init();
+        ArrayList<Proiect> proiecte = new ArrayList<>();
+        String queryString = ("select * from `timetracking`.`" + "proiecte" + "`" + ";");
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        while (rezultate.next()) {
+            String cod_proiect=rezultate.getString("cod_proiect");
+            String nume=rezultate.getString("nume");
+            long data_creare=rezultate.getLong("data_creare");
+           Proiect proiect_gasit = new Proiect(cod_proiect, nume, data_creare);
+            proiecte.add(proiect_gasit);
+           
+
+
+        }
+
+        return proiecte;
+    }
+       
+       
+       //lipseste get dupa id_ap
 }
