@@ -51,6 +51,8 @@ public class webTest extends HttpServlet {
            }catch(Exception e){
                out.println("Exceptie in getCompanies "+e.getLocalizedMessage());
            }
+           
+            out.println("<form method=\"POST\" >");
             out.println("</body>");
             out.println("</html>");
         }
