@@ -12,13 +12,17 @@ package core;
 public class Sesiune {
  
    
-    int id_sesiune;
-    long timestamp_inceput, timestamp_sfarsit;
+    public int id_sesiune;
+    public long timestamp_inceput;
+    public long timestamp_sfarsit;
+    public int id_ap;
     
-    protected Sesiune( int id, long inceput, long sfarsit){
+    protected Sesiune( int id, long inceput, long sfarsit, int id_ap){
         id_sesiune=id;
         timestamp_inceput=inceput;
         timestamp_sfarsit=sfarsit;
+        this.id_ap=id_ap;
+        
                 
         
     }
