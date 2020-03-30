@@ -214,5 +214,62 @@ public abstract class DBLinker {
         return cod_generat;
 
     }
+    public static Sesiune getSesiune(int id_sesiune) throws SQLException {
+        init();
+        Sesiune sesi = null;
+        String queryString = ("select * from `timetracking`.`" + "sesiuni" + "`" + " where id_sesiune = '" + id_sesiune + "'" + ";");
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        while (rezultate.next()) {
+          
+            long tempstamp_inceput=rezultate.getLong("tempstamp_inceput");
+            long tempstamp_sfarsit=rezultate.getLong("tempstamp_sfarsit");
+            int id_ap=rezultate.getInt("id_ap");
+           
+            sesi = new Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit,id_ap);
+        }
+
+        return sesi;
+    }
+    
+     public static ArrayList<Sesiune> getSesiuni() throws SQLException {
+        init();
+        ArrayList<Sesiune> sesiuni = new ArrayList<>();
+        String queryString = ("select * from `timetracking`.`" + "sesiuni" + "`" + ";");
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        while (rezultate.next()) {
+            int id_sesiune = rezultate.getInt("id_sesiune");
+            long tempstamp_inceput=rezultate.getLong("tempstamp_inceput");
+            long tempstamp_sfarsit=rezultate.getLong("tempstamp_sfarsit");
+            int id_ap=rezultate.getInt("id_ap");
+            Sesiune sesiune_gasita = new Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit,id_ap);
+            sesiuni.add(sesiune_gasita);
+           
+
+        }
+
+        return sesiuni;
+    }
+     
+      public static ArrayList<Sesiune> getSesiuni(int id_ap) throws SQLException {
+        init();
+        ArrayList<Sesiune> sesiuni = new ArrayList<>();
+        String queryString = ("select * from `timetracking`.`" + "sesiuni" + "`" + " where id_ap = '" + id_ap + "' ;");
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        while (rezultate.next()) {
+           
+            int id_sesiune = rezultate.getInt("id_sesiune");
+            long tempstamp_inceput=rezultate.getLong("tempstamp_inceput");
+            long tempstamp_sfarsit=rezultate.getLong("tempstamp_sfarsit");
+            Sesiune sesiune_gasita = new  Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit,id_ap);
+          
+            sesiuni.add(sesiune_gasita);
+
+        }
+
+        return sesiuni;
+    }
 
 }
