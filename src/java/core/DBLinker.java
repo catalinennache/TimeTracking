@@ -118,7 +118,7 @@ public abstract class DBLinker {
         boolean scs = true;
         init();
         try {
-            String sql = "Insert into companii values('" + user + "','" + parola + "');";
+            String sql = "Insert into companii (user,parola) values('" + user + "','" + parola + "')";
 
             Statement stmt = con.createStatement();
             stmt.execute(sql);
@@ -126,6 +126,7 @@ public abstract class DBLinker {
 
         } catch (Exception e) {
             scs = false;
+            e.printStackTrace();
         }
         return scs;
     }
@@ -271,5 +272,73 @@ public abstract class DBLinker {
 
         return sesiuni;
     }
+      
+      
+      
+    
+     public static ArrayList<Angajat> getAngajati() throws SQLException {
+        init();
+        ArrayList<Angajat> angajati = new ArrayList<>();
+        String queryString = ("select * from `timetracking`.`" + "angajati" + "`" + ";");
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        while (rezultate.next()) {
+            int id_sesiune = rezultate.getInt("id_angajat");
+            int id_invitatie = rezultate.getInt("id_invitatie");
+            String nickname = rezultate.getString("nickname");
+            String email = rezultate.getString("email");
+            String parola = rezultate.getString("parola");
+           
+            Angajat angajat_gasit = new Angajat(id_sesiune, id_invitatie, nickname,email,parola);
+            angajati.add(angajat_gasit);
+           
 
+        }
+
+        return angajati;
+    }
+     
+          public static ArrayList<Angajat> getAngajati(int id_companie) throws SQLException {
+        init();
+        ArrayList<Angajat> angajati = new ArrayList<>();
+        String queryString = ("select * from `timetracking`.`" + "angajati" + "` where id_invitatie in (select id_invitatie from invitatii where id_companie ='"+id_companie+"')"+  ";");
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        while (rezultate.next()) {
+            int id_sesiune = rezultate.getInt("id_angajat");
+            int id_invitatie = rezultate.getInt("id_invitatie");
+            String nickname = rezultate.getString("nickname");
+            String email = rezultate.getString("email");
+            String parola = rezultate.getString("parola");
+           
+            Angajat angajat_gasit = new Angajat(id_sesiune, id_invitatie, nickname,email,parola);
+            angajati.add(angajat_gasit);
+           
+
+        }
+
+        return angajati;
+    }
+     
+      public static Angajat getAngajat(int id_angajat) throws SQLException {
+        init();
+         Angajat ang = null;
+        String queryString = ("select * from `timetracking`.`" + "angajati" + "`" + " where id_angajat = '" + id_angajat + "'" + ";");
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        while (rezultate.next()) {
+           int id_sesiune = rezultate.getInt("id_angajat");
+            int id_invitatie = rezultate.getInt("id_invitatie");
+            String nickname = rezultate.getString("nickname");
+            String email = rezultate.getString("email");
+            String parola = rezultate.getString("parola");
+           
+          ang = new Angajat(id_sesiune, id_invitatie, nickname,email,parola);
+            //angajati.add(angajat_gasit);
+        }
+
+        return ang;
+    }
+      
+      
 }

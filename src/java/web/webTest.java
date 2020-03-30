@@ -52,7 +52,7 @@ public class webTest extends HttpServlet {
                out.println("Exceptie in getCompanies "+e.getLocalizedMessage());
            }
            
-            out.println("<form method=\"POST\" >");
+            out.println("<form method=\"POST\" action=\"\"> <input name=\"user\"> <input name=\"parola\"> <input type=\"submit\">");
             out.println("</body>");
             out.println("</html>");
         }
@@ -84,6 +84,14 @@ public class webTest extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+       String user = request.getParameter("user");
+       String parola = request.getParameter("parola");
+       if( DBLinker.addCompanie(user, parola) ){
+           response.getWriter().println(" <h1> Companie adaugata cu succes </h1> ");
+       } else{
+             response.getWriter().println(" <h1> Compania nu a fost adaugata </h1> ");
+       }
         processRequest(request, response);
     }
 
