@@ -10,5 +10,16 @@ package core;
  * @author Ana Dima
  */
 public class Sesiune {
+ 
+   
+    int id_sesiune;
+    long timestamp_inceput, timestamp_sfarsit;
     
+    protected Sesiune( int id, long inceput, long sfarsit){
+        id_sesiune=id;
+        timestamp_inceput=inceput;
+        timestamp_sfarsit=sfarsit;
+                
+        
+    }
 }
