@@ -223,8 +223,8 @@ public abstract class DBLinker {
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
           
-            long tempstamp_inceput=rezultate.getLong("tempstamp_inceput");
-            long tempstamp_sfarsit=rezultate.getLong("tempstamp_sfarsit");
+            long tempstamp_inceput=rezultate.getDate("tempstamp_inceput").toInstant().getEpochSecond();
+            long tempstamp_sfarsit=rezultate.getDate("tempstamp_sfarsit").toInstant().getEpochSecond();
             int id_ap=rezultate.getInt("id_ap");
            
             sesi = new Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit,id_ap);
@@ -241,8 +241,8 @@ public abstract class DBLinker {
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
             int id_sesiune = rezultate.getInt("id_sesiune");
-            long tempstamp_inceput=rezultate.getLong("tempstamp_inceput");
-            long tempstamp_sfarsit=rezultate.getLong("tempstamp_sfarsit");
+            long tempstamp_inceput=rezultate.getDate("tempstamp_inceput").toInstant().getEpochSecond();
+            long tempstamp_sfarsit=rezultate.getDate("tempstamp_sfarsit").toInstant().getEpochSecond();
             int id_ap=rezultate.getInt("id_ap");
             Sesiune sesiune_gasita = new Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit,id_ap);
             sesiuni.add(sesiune_gasita);
@@ -262,8 +262,8 @@ public abstract class DBLinker {
         while (rezultate.next()) {
            
             int id_sesiune = rezultate.getInt("id_sesiune");
-            long tempstamp_inceput=rezultate.getLong("tempstamp_inceput");
-            long tempstamp_sfarsit=rezultate.getLong("tempstamp_sfarsit");
+            long tempstamp_inceput=rezultate.getDate("tempstamp_inceput").toInstant().getEpochSecond();
+            long tempstamp_sfarsit=rezultate.getDate("tempstamp_sfarsit").toInstant().getEpochSecond();
             Sesiune sesiune_gasita = new  Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit,id_ap);
           
             sesiuni.add(sesiune_gasita);
@@ -310,7 +310,7 @@ public abstract class DBLinker {
             String nickname = rezultate.getString("nickname");
             String email = rezultate.getString("email");
             String parola = rezultate.getString("parola");
-           
+            
             Angajat angajat_gasit = new Angajat(id_sesiune, id_invitatie, nickname,email,parola);
             angajati.add(angajat_gasit);
            
@@ -350,7 +350,7 @@ public abstract class DBLinker {
         while (rezultate.next()) {
           
             String nume=rezultate.getString("nume");
-            long data_creare=rezultate.getLong("data_creare");
+            long data_creare=rezultate.getDate("data_creare").toInstant().getEpochSecond();
            
            
             proiect = new Proiect(cod_proiect, nume, data_creare);
@@ -368,7 +368,7 @@ public abstract class DBLinker {
         while (rezultate.next()) {
             String cod_proiect=rezultate.getString("cod_proiect");
             String nume=rezultate.getString("nume");
-            long data_creare=rezultate.getLong("data_creare");
+            long data_creare=rezultate.getDate("data_creare").toInstant().getEpochSecond();
            Proiect proiect_gasit = new Proiect(cod_proiect, nume, data_creare);
             proiecte.add(proiect_gasit);
            
@@ -379,6 +379,94 @@ public abstract class DBLinker {
         return proiecte;
     }
        
+       
+       public static AngajatProiect getAngajatProiect(int ap) throws SQLException{
+            init();
+         
+            String queryString = ("select * from `timetracking`.`" + "angajat_proiecte" + "` where id_ap = '" +ap+ "' ;");
+            Statement stmt = con.createStatement();
+            ResultSet rezultate = stmt.executeQuery(queryString);
+            rezultate.next();
+            //AngajatProiect( int ap, int angajat, String cod, long in, long out)
+            int ang = rezultate.getInt("id_angajat");
+            String cod_p = rezultate.getString("cod_proiect");
+            long in = rezultate.getDate("data_inrolarii").toInstant().getEpochSecond();
+            long out = rezultate.getDate("data_parasire")==null?0:rezultate.getDate("data_parasire").toInstant().getEpochSecond();
+            
+            return new AngajatProiect(ap,ang,cod_p,in,out);
+       }    
+            
+       public static ArrayList<AngajatProiect> getAngajatProiecte(int id_angajat,String id_proiect) throws SQLException{
+             init();
+            ArrayList<AngajatProiect> angajat_proiect = new ArrayList<>();
+            String queryString = ("select * from `timetracking`.`" + "angajat_proiecte" + "` where id_angajat = '" +id_angajat+ "' and cod_proiect = '"+id_proiect+"' ;");
+            Statement stmt = con.createStatement();
+            ResultSet rezultate = stmt.executeQuery(queryString);
+            while(rezultate.next()){
+                int ap = rezultate.getInt("id_ap");
+                int ang = rezultate.getInt("id_angajat");
+                String cod_p = rezultate.getString("cod_proiect");
+                long in = rezultate.getDate("data_inrolarii").toInstant().getEpochSecond();
+                long out = rezultate.getDate("data_parasire")==null?0:rezultate.getDate("data_parasire").toInstant().getEpochSecond();
+                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out));
+            }
+            
+             return angajat_proiect;
+       }    
+           
+       public static ArrayList<AngajatProiect> getAngajatProiecte(int id_angajat) throws SQLException{
+        init();
+            ArrayList<AngajatProiect> angajat_proiect = new ArrayList<>();
+            String queryString = ("select * from `timetracking`.`" + "angajat_proiecte" + "` where id_angajat = '" +id_angajat+"' ;");
+            Statement stmt = con.createStatement();
+            ResultSet rezultate = stmt.executeQuery(queryString);
+            while(rezultate.next()){
+                int ap = rezultate.getInt("id_ap");
+                int ang = rezultate.getInt("id_angajat");
+                String cod_p = rezultate.getString("cod_proiect");
+                long in = rezultate.getDate("data_inrolarii").toInstant().getEpochSecond();
+                long out = rezultate.getDate("data_parasire")==null?0:rezultate.getDate("data_parasire").toInstant().getEpochSecond();
+                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out));
+            }
+            
+             return angajat_proiect;
+       }
+       
+       public static ArrayList<AngajatProiect> getAngajatiProiect(int id_proiect) throws SQLException{
+            init();
+            ArrayList<AngajatProiect> angajat_proiect = new ArrayList<>();
+            String queryString = ("select * from `timetracking`.`" + "angajat_proiecte" + "` where cod_proiect = '"+id_proiect+"' ;");
+            Statement stmt = con.createStatement();
+            ResultSet rezultate = stmt.executeQuery(queryString);
+            while(rezultate.next()){
+                int ap = rezultate.getInt("id_ap");
+                int ang = rezultate.getInt("id_angajat");
+                String cod_p = rezultate.getString("cod_proiect");
+                long in = rezultate.getDate("data_inrolarii").toInstant().getEpochSecond();
+                long out = rezultate.getDate("data_parasire")==null?0:rezultate.getDate("data_parasire").toInstant().getEpochSecond();
+                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out));
+            }
+            
+             return angajat_proiect;
+       }
+       
+       public static ArrayList<AngajatProiect> getAngajatiProiecte() throws SQLException{
+             init();
+            ArrayList<AngajatProiect> angajat_proiect = new ArrayList<>();
+            String queryString = ("select * from `timetracking`.`" + "angajat_proiecte" + "`;");
+            Statement stmt = con.createStatement();
+            ResultSet rezultate = stmt.executeQuery(queryString);
+            while(rezultate.next()){
+                int ap = rezultate.getInt("id_ap");
+                int ang = rezultate.getInt("id_angajat");
+                String cod_p = rezultate.getString("cod_proiect");
+                long in = rezultate.getDate("data_inrolarii").toInstant().getEpochSecond();
+                long out = rezultate.getDate("data_parasire")==null?0:rezultate.getDate("data_parasire").toInstant().getEpochSecond();
+                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out));
+            }
+            
+             return angajat_proiect;
+       }
        
        //lipseste get dupa id_ap
 }
