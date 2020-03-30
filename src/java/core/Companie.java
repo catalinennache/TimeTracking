@@ -14,9 +14,9 @@ import java.util.ArrayList;
  */
 public class Companie {
     
-    int id_companie;
-    String user,parola;
-    ArrayList<Invitatie> invitatii;
+   public int id_companie;
+   public String user,parola;
+   public  ArrayList<Invitatie> invitatii;
     
     
     protected Companie(int id_comp,String user,String parola){
