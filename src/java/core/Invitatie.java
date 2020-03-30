@@ -11,9 +11,9 @@ package core;
  */
 public class Invitatie {
     
-    String cod_invitatie;
-    boolean folosita;
-    int id_companie;
+   public String cod_invitatie;
+   public boolean folosita;
+   public int id_companie;
     
     protected Invitatie(String cod,boolean folosita,int id){
         cod_invitatie = cod;
