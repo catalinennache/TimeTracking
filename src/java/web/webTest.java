@@ -52,7 +52,10 @@ public class webTest extends HttpServlet {
                out.println("Exceptie in getCompanies "+e.getLocalizedMessage());
            }
            
+           
             out.println("<form method=\"POST\" action=\"\"> <input name=\"user\"> <input name=\"parola\"> <input type=\"submit\">");
+            out.println("<h4> Stergere din tabel </h4> ");
+            out.println("<form method=\"POST\" action=\"\"> <input name=\"delete\"> <input type=\"submit\">");
             out.println("</body>");
             out.println("</html>");
         }
@@ -87,9 +90,16 @@ public class webTest extends HttpServlet {
         
        String user = request.getParameter("user");
        String parola = request.getParameter("parola");
-       if( DBLinker.addCompanie(user, parola) ){
+      try{
+          int id = Integer.valueOf(request.getParameter("delete"));
+          DBLinker.removeCompanie(id);
+           response.getWriter().println(" <h1> Companie "+id+" stearsa</h1> ");
+      }catch(Exception e){
+      }
+       
+       if( user.length()>0 && parola.length()>0 && DBLinker.addCompanie(user, parola) ){
            response.getWriter().println(" <h1> Companie adaugata cu succes </h1> ");
-       } else{
+       } else if( user.length()>0 && parola.length()>0){
              response.getWriter().println(" <h1> Compania nu a fost adaugata </h1> ");
        }
         processRequest(request, response);

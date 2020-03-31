@@ -130,6 +130,20 @@ public abstract class DBLinker {
         }
         return scs;
     }
+    
+    public static boolean removeCompanie(int id_comp){
+        boolean scs = false;
+        try{
+                Statement stmt;
+                stmt = con.createStatement();
+                stmt.executeUpdate("delete from " + "companii" + " where " + "id_companie" + " = '" + id_comp + "';"); 
+                scs = true;
+        } catch(Exception e){
+            
+        }
+        
+        return scs;
+    }
 
     public static Invitatie getInvitatie(String cod) throws SQLException {
         init();
@@ -359,7 +373,7 @@ public abstract class DBLinker {
         return proiect;
     }
        
-       public static ArrayList<Proiect> getProiect() throws SQLException {
+       public static ArrayList<Proiect> getProiects() throws SQLException {
         init();
         ArrayList<Proiect> proiecte = new ArrayList<>();
         String queryString = ("select * from `timetracking`.`" + "proiecte" + "`" + ";");
