@@ -82,11 +82,13 @@ public abstract class DBLinker {
     public static Companie getCompanie(String user, String parola) throws SQLException {
         init();
         Companie cmp = null;
-        String queryString = ("select * from `timetracking`.`" + "companii" + "`" + " where user = '" + user + "'" + "','" + parola + ";");
+        String queryString = ("select * from `timetracking`.`" + "companii" + "`" + " where user = '" + user + "'" + " and parola = '" + parola + "';");
         Statement stmt = con.createStatement();
+        System.out.println(queryString);
         ResultSet rezultate = stmt.executeQuery(queryString);
         rezultate.next();
         // de revazut
+        try{
         String tmp = rezultate.getString("id_companie");
         if (tmp != null) {
             int id_companie = Integer.parseInt(tmp);
@@ -94,6 +96,7 @@ public abstract class DBLinker {
         }else{
             return null;
         }
+        }catch(Exception e){ return null;}
 
         return cmp;
     }
@@ -183,39 +186,43 @@ public abstract class DBLinker {
 
    public static ArrayList<Invitatie> getInvitatii(int id_companie) throws SQLException {
         init();
+        System.out.println(">> entering getInvitatii");
         ArrayList<Invitatie> invitatii = new ArrayList<>();
         String queryString = ("select * from `timetracking`.`" + "invitatii" + "`" + " where id_companie = '" + id_companie + "' ;");
         Statement stmt = con.createStatement();
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
             // int id_companie = rezultate.getInt("id_companie");
-            String cod = rezultate.getString("cod");
-            boolean folosita = rezultate.getBoolean("folosita");
+            String cod = rezultate.getString("id_invitatie");
+            boolean folosita = rezultate.getBoolean("invitatie_folosita");
             Invitatie inv_gasita = new Invitatie(cod, folosita, id_companie);
             invitatii.add(inv_gasita);
+            
              // new companie
             // .add(0x326);
 
         }
+        System.out.println("Returning "+invitatii.size()+" invitatii ");
 
         return invitatii;
     }
 
-    public static boolean addInvitatie(boolean folosita, int id_companie) {
+    public static String addInvitatie(boolean folosita, int id_companie) {
         boolean scs = true;
         String cod_invitatie = genereazaCodInv();
         init();
         try {
 
-            String sql = "Insert into companii values('" + cod_invitatie + "','" + (folosita ? 1 : 0) + "','" + id_companie + "');";
+            String sql = "Insert into invitatii values('" + cod_invitatie + "','" + (folosita ? 1 : 0) + "','" + id_companie + "');";
             Statement stmt = con.createStatement();
             stmt.execute(sql);
             disconnect();
 
         } catch (Exception e) {
+            e.printStackTrace();
             scs = false;
         }
-        return scs;
+        return cod_invitatie;
     }
 
     private static String genereazaCodInv() {
@@ -345,6 +352,26 @@ public abstract class DBLinker {
             int id_invitatie = rezultate.getInt("id_invitatie");
             String nickname = rezultate.getString("nickname");
             String email = rezultate.getString("email");
+            String parola = rezultate.getString("parola");
+           
+          ang = new Angajat(id_sesiune, id_invitatie, nickname,email,parola);
+            //angajati.add(angajat_gasit);
+        }
+
+        return ang;
+    }
+      
+         public static Angajat getAngajat(String email, String password) throws SQLException {
+        init();
+         Angajat ang = null;
+        String queryString = ("select * from `timetracking`.`" + "angajati" + "`" + " where email = '" + email + "' and parola = "+ password + ";");
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        while (rezultate.next()) {
+           int id_sesiune = rezultate.getInt("id_angajat");
+            int id_invitatie = rezultate.getInt("id_invitatie");
+            String nickname = rezultate.getString("nickname");
+           
             String parola = rezultate.getString("parola");
            
           ang = new Angajat(id_sesiune, id_invitatie, nickname,email,parola);
