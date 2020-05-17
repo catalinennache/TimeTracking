@@ -13,17 +13,19 @@ public class AngajatProiect {
     
         public int id_ap, id_angajat;
         public String cod_proiect;
-        public long data_in;
-        public long data_out;
+        public String data_in;
+        public String data_out;
+        public double ore_lucrate;
    
    
-   protected AngajatProiect( int ap, int angajat, String cod, long in, long out){
+   protected AngajatProiect( int ap, int angajat, String cod, String in, String out,double ol){
        
        id_ap=ap;
        id_angajat=angajat;
        cod_proiect=cod;
        data_in=in;
        data_out=out;
+       this.ore_lucrate = ol;
    }
    
 }

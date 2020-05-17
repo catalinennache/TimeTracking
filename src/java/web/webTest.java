@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Enache
  */
-@WebServlet(name = "webTest", urlPatterns = {"/webTest"})
+@WebServlet(name = "addAP", urlPatterns = {"/addAP"})
 public class webTest extends HttpServlet {
 
     /**
@@ -73,6 +73,10 @@ public class webTest extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        
+        
+        
         processRequest(request, response);
     }
 
@@ -88,21 +92,12 @@ public class webTest extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-       String user = request.getParameter("user");
-       String parola = request.getParameter("parola");
-      try{
-          int id = Integer.valueOf(request.getParameter("delete"));
-          DBLinker.removeCompanie(id);
-           response.getWriter().println(" <h1> Companie "+id+" stearsa</h1> ");
-      }catch(Exception e){
-      }
+       String cod_proiect = request.getParameter("proiect");
+       int id_angajat = Integer.parseInt(request.getParameter("angajat"));
        
-       if( user.length()>0 && parola.length()>0 && DBLinker.addCompanie(user, parola) ){
-           response.getWriter().println(" <h1> Companie adaugata cu succes </h1> ");
-       } else if( user.length()>0 && parola.length()>0){
-             response.getWriter().println(" <h1> Compania nu a fost adaugata </h1> ");
-       }
-        processRequest(request, response);
+     boolean scs =  DBLinker.addAngajatProiect(cod_proiect, id_angajat);
+        
+        response.getWriter().write("{\"scs\":"+scs+"}");
     }
 
     /**
