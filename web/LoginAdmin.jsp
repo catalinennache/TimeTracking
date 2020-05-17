@@ -1,8 +1,3 @@
-<%-- 
-    Document   : Login
-    Created on : Apr 28, 2020, 3:36:31 PM
-    Author     : Enache
---%>
 
 
 
@@ -51,13 +46,94 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1> Log In -- Admin </h1>
+        <div class="title">
+        <h1> Log In  </h1>
+        </div>
+        
         <form method="POST" action="/TimeTracking/LoginAdmin.jsp">
-            <input type="text" name="user">
-            <input type="password" name="pass">
-            <input type="submit" value="apasa-ma">
+           
+              <div class="row">
+              <label> User </label>
+                <input type="text" required  name="user">
+             </div>
+             <div class="row">
+                <label> Parola </label>
+                <input type="text" required name="pass">
+             </div>
+              <input type="submit" class="send" value="Apasa-ma">
+
+        
         </form>
         <%= mesaj_eroare  %>
+        
+        
+        <style>
+            
+            body{
+                
+               background-image:url('3.jpg');
+            background-size:1600px 1000px; 
+            
+            }
+                
+            
+          form{
+               width: max-content;
+                margin: 0 auto;
+                padding: 60px;
+               // background:#4ba4d1;
+                margin-top:5%;
+                border: groove;
+                border-top-left-radius: 40px 40px;
+                 border-top-right-radius: 40px 40px;
+                  border-bottom-left-radius: 40px 40px;
+                  border-bottom-right-radius: 40px 40px;
+                  border-color:#f7efcd; 
+            }
+            
+            form input, form label{
+                display: block;
+                margin:auto;
+                border:1px sold black;
+                
+            }
+            
+            form input{
+                padding:10px;
+                
+            }
+            
+        .send{
+                border:1px solid black;
+                background:  #ffe5cc;
+                margin-top:10px;
+                transition: 0.2s linear;
+            }
+            
+            .send:hover{
+                background:#ff7b00;
+                color:white;
+                cursor:pointer;
+                transform:scale(1.1);
+            }
+            .row{
+                padding:10px;
+                font-size: 20px;
+                
+            
+            }
+            .title{
+                
+               text-align: center;
+               margin-top:5%;
+                //padding: 60px;
+            }
+            
+            
+            
+            
+        </style>
+        
         
     </body>
 </html>
