@@ -1,84 +1,82 @@
 <%-- 
-    Document   : Register
-    Created on : May 10, 2020, 4:51:00 PM
-    Author     : Enache
+    Document   : AddProiect
+    Created on : May 14, 2020, 8:03:04 PM
+    Author     : Ana Dima
 --%>
 
+
 <%@page import="core.DBLinker"%>
-<%@page import="core.Invitatie"%>
-<%@page import="core.Angajat"%>
+<%@page import="core.Proiect"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
      HttpSession current_session = request.getSession();
-    if(current_session.getAttribute("user") != null){
-           response.sendRedirect("/TimeTracking/HomeAngajat.jsp");
+    /*if(current_session.getAttribute("user_admin") != null){
+           response.sendRedirect("/TimeTracking/AddProiect.jsp");
     }else{
          System.out.println("Niciun user momentan logat");
-    }
+    }*/
     
     String metoda_de_obtinere_a_paginii = request.getMethod();
     int id_companie_gasita = -1;
-    String mesaj_eroare = "";
+    String mesaj_eroare = " nu merge";
     
     
-    if(metoda_de_obtinere_a_paginii.equals("POST")){
-        String user = request.getParameter("nickname");
-        String password = request.getParameter("pass");
-        String email = request.getParameter("email");
-        String invitatie = request.getParameter("invitatie");
-       Invitatie inv =  DBLinker.getInvitatie(invitatie);
-       if(!inv.folosita){
-       Angajat ang = new Angajat(-1,invitatie,user,email,password);
-      boolean scs =  DBLinker.addAngajat(ang, inv);
+    if(metoda_de_obtinere_a_paginii.equals("POST"))
+    { String cod_proiect = request.getParameter("cod_proiect");
+        String nume = request.getParameter("nume");
+       // long data = request.getParameter("data");
+        
+        String date=request.getParameter("data");
        
+         Proiect proiect = new Proiect(cod_proiect,nume,date);
+            boolean scs =  DBLinker.addProiect(proiect);
+	
+   
+    
+  
+      
        if(scs){
-           response.sendRedirect("/TimeTracking/LoginAngajat.jsp");
+           response.sendRedirect("/TimeTracking/AddProiect.jsp");
        }else{
            mesaj_eroare = "A aparut o eroare la adaugare";
-       }
-       }else{
-           mesaj_eroare = "Invitatia nu mai este valabila!";
+       
        }
     } 
+
 %>
-
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Register</title>
+        <title>Creaza un Proiect</title>
     </head>
     <body>
 
 
-        <form method="POST" action="/TimeTracking/Register.jsp">
+        <form method="POST" action="/TimeTracking/AddProiect.jsp">
             <div class="row">
-                <label> Cod Invitatie </label>
-                <input type="text" required name="invitatie">
+                <label> Cod Proiect </label>
+                <input type="text" required name="cod_proiect">
             </div>
             <div class="row">
-                <label> Nickname </label>
-                <input type="text" required name="nickname">
+                <label> Nume </label>
+                <input type="text" required name="nume">
             </div>
+            
             <div class="row">
-                <label> Email </label>
-                <input type="email" required name="email">
+                <label> Data </label>
+                <input type="date" required name="data">
             </div>
-            <div class="row">
-                <label> Parola </label>
-                <input type="password" required name="pass">
-            </div>
+            
             <input type="submit" class="send" value="Register">
-            <span>  <%= mesaj_eroare %> </span>
+          
         </form>
-
-        <style>
+         <style>
 
             body{
                 // background-color:darkgrey ;
                 //background-image:url('4.png') ;
-                background-image:url(backg.jpeg) ;
+                background-image:url(11.jpg) ;
                background-size: cover;
                 background-attachment: fixed;
             }
@@ -113,7 +111,7 @@
 
             .send{
                 border:1px solid black;
-                background: #87CEEB;
+                background:#6600cc;
                 margin-top:10px;
                 transition: 0.2s linear;
                 padding:  20px;

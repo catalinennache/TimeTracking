@@ -15,7 +15,7 @@ public class Invitatie {
    public boolean folosita;
    public int id_companie;
     
-    protected Invitatie(String cod,boolean folosita,int id){
+    public Invitatie(String cod,boolean folosita,int id){
         cod_invitatie = cod;
         this.folosita = folosita;
         this.id_companie = id;

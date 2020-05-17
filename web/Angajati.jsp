@@ -1,21 +1,26 @@
+<%-- 
+    Document   : Angajati
+    Created on : May 14, 2020, 5:50:15 PM
+    Author     : Ana Dima
+--%>
 
-<%@page import="core.Invitatie"%>
+<%@page import="core.Angajat"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="core.Invitatie"%>
 <%@page import="core.DBLinker"%>
 <%@page import="core.Companie"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
 <% HttpSession current_session = request.getSession();
     if (current_session.getAttribute("user_admin") == null) {
         response.sendRedirect("/TimeTracking/LoginAdmin.jsp");
     }
 
-    Companie companie = (Companie) current_session.getAttribute("user_admin");
-
-    ArrayList<Invitatie> invitatii_companie = DBLinker.getInvitatii(companie.id_companie);
-
-
+   Companie companie = (Companie) current_session.getAttribute("user_admin");
+   
+   
+    ArrayList<Angajat> angajati_companie = DBLinker. getAngajati(companie.id_companie);
+    
 %>
 <html>
     <head>
@@ -23,28 +28,43 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1 style="text-align: center;font-size:45px;color: cyan;margin-top: 2%;">Invitatii Existente</h1>
+        <h1 style="text-align: center;font-size:45px;color: cyan;margin-top: 2%;">Angajatii Companiei</h1>
 
         <table>
             <thead>
-            <th style="text-align: center;font-size:30px; color: crimson;"> Cod Invitatie </th>
-            <th style="text-align: center;font-size:30px; color: crimson;"> Folosita </th>
+            <th style="text-align: center;font-size:30px; color: crimson;"> Id Angajat </th>
+            <th style="text-align: center;font-size:30px; color: crimson;"> Id Invitatie </th>
+            <th style="text-align: center;font-size:30px; color: crimson;"> Nickname </th>
+             <th style="text-align: center;font-size:30px; color: crimson;"> Email </th>
+
+
+        
         </thead>
 
         <tbody>
-            <% for (int i = 0; i < invitatii_companie.size(); i++) {%> 
-            <tr class="<%= i==invitatii_companie.size()-1?"last":"" %>">
-                <td>
-                    <%= invitatii_companie.get(i).cod_invitatie%>
+            <% for (int i = 0; i < angajati_companie.size(); i++) {%> 
+            <tr class="<%= i==angajati_companie.size()-1?"last":"" %>">
+                 <td style="text-align: center;" >
+                    <%=angajati_companie.get(i).id_angajat %>
                 </td>
                 <td style="text-align: center;" >
-                    <%= invitatii_companie.get(i).folosita%>
+                    <%= angajati_companie.get(i).id_invitatie%>
                 </td>
+                 </td>
+                <td style="text-align: center;" >
+                    <%= angajati_companie.get(i).nickname%>
+                </td>
+                 </td>
+                <td style="text-align: center;" >
+                    <%= angajati_companie.get(i).email%>
+                </td>
+                
             </tr>
             <% }%>
         </tbody>
     </table>
         
+               
         <style>
             
             
@@ -75,3 +95,4 @@
         </style>
 </body>
 </html>
+        

@@ -13,9 +13,9 @@ public class Proiect {
     
     public String cod_proiect;
     public String nume;
-    public long data_creare;
+    public String data_creare;
     
-    protected Proiect( String cod, String nume, long data){
+    public Proiect( String cod, String nume, String data){
         cod_proiect=cod;
         this.nume=nume;
         data_creare=data;

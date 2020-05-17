@@ -10,13 +10,14 @@ package core;
  * @author Enache
  */
 public class Angajat {
-    public int id_angajat,id_invitatie;
+    public int id_angajat;
+    public String id_invitatie;
     public String nickname,email,parola;
     
-    protected Angajat(int id_angajat, int id_invitatie,String nick,String email, String parola){
+    public Angajat(int id_angajat, String cod_invitatie ,String nick,String email, String parola){
     
             this.id_angajat = id_angajat;
-            this.id_invitatie = id_invitatie;
+            this.id_invitatie = cod_invitatie;
             this.nickname = nick;
             this.parola = parola;
             this.email = email;

@@ -134,6 +134,52 @@ public abstract class DBLinker {
         return scs;
     }
     
+    public static boolean addAngajat(Angajat ang, Invitatie inv) {
+        boolean scs = true;
+        init();
+        
+        try {
+            String sql = "Insert into angajati values(NULL,'" + inv.cod_invitatie + "','" + ang.nickname+"','"+ang.email+"','"+ang.parola+ "')";
+
+            Statement stmt = con.createStatement();
+            stmt.execute(sql);
+            
+            sql = "update invitatii set invitatie_folosita = true where id_invitatie = '"+inv.cod_invitatie+"'";
+            stmt.execute(sql);
+            disconnect();
+
+        } catch (Exception e) {
+            scs = false;
+            e.printStackTrace();
+        }
+        return scs;
+    }
+    
+    
+    
+        public static boolean addProiect(Proiect pr) {
+        boolean scs = true;
+        init();
+        
+        try {
+            String sql = "Insert into proiecte values('" + pr.cod_proiect+ "','" + pr.nume+"','"+pr.data_creare+"')";
+
+            Statement stmt = con.createStatement();
+            stmt.execute(sql);
+            
+           // sql = "update invitatii set invitatie_folosita = true where id_invitatie = '"+inv.cod_invitatie+"'";
+           // stmt.execute(sql);
+            disconnect();
+
+        } catch (Exception e) {
+            scs = false;
+            e.printStackTrace();
+        }
+        return scs;
+    }
+    
+    
+    
     public static boolean removeCompanie(int id_comp){
         boolean scs = false;
         try{
@@ -151,12 +197,12 @@ public abstract class DBLinker {
     public static Invitatie getInvitatie(String cod) throws SQLException {
         init();
         Invitatie inv = null;
-        String queryString = ("select * from `timetracking`.`" + "invitatii" + "`" + " where cod = '" + cod + "'" + ";");
+        String queryString = ("select * from `timetracking`.`" + "invitatii" + "`" + " where id_invitatie = '" + cod + "'" + ";");
         Statement stmt = con.createStatement();
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
             // 
-            boolean folosita = rezultate.getBoolean("folosita");
+            boolean folosita = rezultate.getBoolean("invitatie_folosita");
             int id_companie = rezultate.getInt("id_companie");
             inv = new Invitatie(cod, folosita, id_companie);
         }
@@ -173,7 +219,7 @@ public abstract class DBLinker {
         while (rezultate.next()) {
             int id_companie = rezultate.getInt("id_companie");
             String cod = rezultate.getString("cod");
-            boolean folosita = rezultate.getBoolean("folosita");
+            boolean folosita = rezultate.getBoolean("invitatie_folosita");
             Invitatie inv_gasita = new Invitatie(cod, folosita, id_companie);
             invitatii.add(inv_gasita);
              // new companie
@@ -305,7 +351,7 @@ public abstract class DBLinker {
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
             int id_sesiune = rezultate.getInt("id_angajat");
-            int id_invitatie = rezultate.getInt("id_invitatie");
+            String id_invitatie = rezultate.getString("id_invitatie");
             String nickname = rezultate.getString("nickname");
             String email = rezultate.getString("email");
             String parola = rezultate.getString("parola");
@@ -327,7 +373,7 @@ public abstract class DBLinker {
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
             int id_sesiune = rezultate.getInt("id_angajat");
-            int id_invitatie = rezultate.getInt("id_invitatie");
+            String id_invitatie = rezultate.getString("id_invitatie");
             String nickname = rezultate.getString("nickname");
             String email = rezultate.getString("email");
             String parola = rezultate.getString("parola");
@@ -349,7 +395,7 @@ public abstract class DBLinker {
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
            int id_sesiune = rezultate.getInt("id_angajat");
-            int id_invitatie = rezultate.getInt("id_invitatie");
+            String id_invitatie = rezultate.getString("id_invitatie");
             String nickname = rezultate.getString("nickname");
             String email = rezultate.getString("email");
             String parola = rezultate.getString("parola");
@@ -361,20 +407,20 @@ public abstract class DBLinker {
         return ang;
     }
       
-         public static Angajat getAngajat(String email, String password) throws SQLException {
+         public static Angajat getAngajat(String porecla, String password) throws SQLException {
         init();
          Angajat ang = null;
-        String queryString = ("select * from `timetracking`.`" + "angajati" + "`" + " where email = '" + email + "' and parola = "+ password + ";");
+        String queryString = ("select * from `timetracking`.`" + "angajati" + "`" +  " where nickname = '" + porecla + "'" + " and parola = '" + password + "';");
         Statement stmt = con.createStatement();
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
            int id_sesiune = rezultate.getInt("id_angajat");
-            int id_invitatie = rezultate.getInt("id_invitatie");
-            String nickname = rezultate.getString("nickname");
+            String id_invitatie = rezultate.getString("id_invitatie");
+            String email = rezultate.getString("email");
            
             String parola = rezultate.getString("parola");
            
-          ang = new Angajat(id_sesiune, id_invitatie, nickname,email,parola);
+          ang = new Angajat(id_sesiune, id_invitatie, porecla,email,parola);
             //angajati.add(angajat_gasit);
         }
 
@@ -391,7 +437,7 @@ public abstract class DBLinker {
         while (rezultate.next()) {
           
             String nume=rezultate.getString("nume");
-            long data_creare=rezultate.getDate("data_creare").toInstant().getEpochSecond();
+            String  data_creare=rezultate.getString("data_creare");
            
            
             proiect = new Proiect(cod_proiect, nume, data_creare);
@@ -403,13 +449,13 @@ public abstract class DBLinker {
        public static ArrayList<Proiect> getProiects() throws SQLException {
         init();
         ArrayList<Proiect> proiecte = new ArrayList<>();
-        String queryString = ("select * from `timetracking`.`" + "proiecte" + "`" + ";");
+        String queryString = ("select * from `timetracking`.`" + "proiect" + "`" + ";");
         Statement stmt = con.createStatement();
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
             String cod_proiect=rezultate.getString("cod_proiect");
             String nume=rezultate.getString("nume");
-            long data_creare=rezultate.getDate("data_creare").toInstant().getEpochSecond();
+            String data_creare=rezultate.getString("data_creare");
            Proiect proiect_gasit = new Proiect(cod_proiect, nume, data_creare);
             proiecte.add(proiect_gasit);
            
