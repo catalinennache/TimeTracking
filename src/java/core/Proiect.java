@@ -14,12 +14,13 @@ public class Proiect {
     public String cod_proiect;
     public String nume;
     public String data_creare;
+    public int id_companie;
     
-    public Proiect( String cod, String nume, String data){
+    public Proiect( String cod, String nume, String data, int id_cmp){
         cod_proiect=cod;
         this.nume=nume;
         data_creare=data;
-        
+        this.id_companie = id_cmp;
     }
     
 }

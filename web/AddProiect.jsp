@@ -5,32 +5,35 @@
 --%>
 
 
+<%@page import="core.Companie"%>
 <%@page import="core.DBLinker"%>
 <%@page import="core.Proiect"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
      HttpSession current_session = request.getSession();
-    /*if(current_session.getAttribute("user_admin") != null){
-           response.sendRedirect("/TimeTracking/AddProiect.jsp");
+    if(current_session.getAttribute("user_admin") == null){
+           System.out.println("Niciun user momentan logat");
+           response.sendRedirect("/TimeTracking/LoginAdmin.jsp");
     }else{
-         System.out.println("Niciun user momentan logat");
-    }*/
+      
+    }
     
     String metoda_de_obtinere_a_paginii = request.getMethod();
     int id_companie_gasita = -1;
-    String mesaj_eroare = " nu merge";
+    String mesaj_eroare = "";
     
     
     if(metoda_de_obtinere_a_paginii.equals("POST"))
     { String cod_proiect = request.getParameter("cod_proiect");
         String nume = request.getParameter("nume");
        // long data = request.getParameter("data");
-        
+          Companie companie = (Companie) current_session.getAttribute("user_admin");
+  
         String date=request.getParameter("data");
        
-         Proiect proiect = new Proiect(cod_proiect,nume,date);
-            boolean scs =  DBLinker.addProiect(proiect);
+         Proiect proiect = new Proiect(cod_proiect,nume,date,companie.id_companie);
+         boolean scs =  DBLinker.addProiect(proiect);
 	
    
     
@@ -70,6 +73,7 @@
             
             <input type="submit" class="send" value="Register">
           
+            <%= mesaj_eroare %>
         </form>
          <style>
 
