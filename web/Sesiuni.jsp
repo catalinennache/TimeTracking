@@ -24,7 +24,7 @@
  Angajat angajat=(Angajat)current_session.getAttribute("user");
  //int ap=angajat.id_ap;
      ArrayList<Sesiune> angajat_sesiune = DBLinker.getSesiuniAngajat(angajat.id_angajat);
-     ArrayList<AngajatProiect> angajat_sesiuni = DBLinker.getAngajatProiecte(angajat.id_angajat);
+    // ArrayList<AngajatProiect> angajat_sesiuni = DBLinker.getAngajatProiecte(angajat.id_angajat);
 
 %>
 <html>
@@ -40,8 +40,8 @@
             <thead>
             <th style="text-align: center;font-size:30px; color: indigo;  padding: 20px;"> Id Sesiune </th>
             <th style="text-align: center;font-size:30px; color: indigo;  padding: 20px;"> Cod Proiect</th>
-            <th style="text-align: center;font-size:30px; color: indigo;  padding: 20px;"> Ora Inceput </th>
-            <th style="text-align: center;font-size:30px; color: indigo;  padding: 20px;"> Ora Sfarsit</th>
+            <th style="text-align: center;font-size:30px; color: indigo;  padding: 20px;"> Data Ora Inceput </th>
+            <th style="text-align: center;font-size:30px; color: indigo;  padding: 20px;"> Data Ora Sfarsit</th>
 
         </thead>
 
@@ -57,7 +57,7 @@
                 </td>
                 
                  <td style="text-align: center;" >
-                    <%= angajat_sesiuni.get(i).cod_proiect%>
+                    <%= angajat_sesiune.get(i).cod_proiect%>
                   
                 </td>
                 <td style="text-align: center;" >

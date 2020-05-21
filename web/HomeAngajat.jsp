@@ -15,7 +15,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Home Angajat</title>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
               <h1 style="text-align: center;color:purple;margin-bottom: 100px;">Time Tracking -- Angajat</h1>
@@ -25,7 +26,7 @@
         
         <a href="ProiecteleUnuiAngajat.jsp" class="blocks"> Proiecte </a>
         <a href="Sesiuni.jsp" class="blocks"> Sesiuni </a>
-        <a href="StartS.jsp" class="blocks"> Start </a>
+    
     </div>
        
          <div class="grid2">
@@ -33,6 +34,10 @@
     </div>
                  </div>
 
+    <script>
+     
+        
+        </script>
         
  <style>
         body{
@@ -53,7 +58,7 @@
       // width:100%;
         margin:0 auto;
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         grid-gap: .5rem;
         padding: .5rem;
         grid-auto-rows: minmax(100px, auto);
