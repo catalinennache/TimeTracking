@@ -352,8 +352,8 @@ public abstract class DBLinker {
         while (rezultate.next()) {
            
             int id_sesiune = rezultate.getInt("id_sesiune");
-            long tempstamp_inceput=rezultate.getDate("tempstamp_inceput").toInstant().getEpochSecond();
-            long tempstamp_sfarsit=rezultate.getDate("tempstamp_sfarsit").toInstant().getEpochSecond();
+            long tempstamp_inceput=rezultate.getDate("timestamp_inceput").toInstant().getEpochSecond();
+            long tempstamp_sfarsit=rezultate.getDate("timestamp_sfarsit").toInstant().getEpochSecond();
             Sesiune sesiune_gasita = new  Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit,id_ap);
           
             sesiuni.add(sesiune_gasita);
@@ -362,7 +362,32 @@ public abstract class DBLinker {
 
         return sesiuni;
     }
-      
+         public static ArrayList<Sesiune> getSesiuniAngajat(int id_angajat) throws SQLException {
+        init();
+        ArrayList<Sesiune> sesiuni = new ArrayList<>();
+       String queryString = ("select * from `timetracking`.`" + "sesiuni" + "`" +" join" + "`"+"angajat_proiect" + "`" +"  using (id_ap)"  +" where id_angajat = '" + id_angajat + "' ;");
+        // String queryString = ("select * from `timetracking`.`" + "sesiuni" + "`" +" join" + "`"+"angajat_proiect" + "`" +"  using (id_ap)"  +" join" + "`"+"proiecte" + "`" +"  using (cod_proiect)"  +" where id_angajat = '" + id_angajat + "' ;");
+
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        while (rezultate.next()) {
+           
+            int id_sesiune = rezultate.getInt("id_sesiune");
+               long tempstamp_inceput=rezultate.getLong("timestamp_inceput");
+                long tempstamp_sfarsit=rezultate.getLong("timestamp_final");
+
+           //long tempstamp_inceput=rezultate.getDate("timestamp_inceput").toInstant().getEpochSecond();
+           //long tempstamp_sfarsit=rezultate.getDate("timestamp_final").toInstant().getEpochSecond();
+             int id_ap = rezultate.getInt("id_ap");
+             int id_proiect=rezultate.getInt("cod_proiect");
+            Sesiune sesiune_gasita = new  Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit,id_ap);
+          
+            sesiuni.add(sesiune_gasita);
+
+        }
+
+        return sesiuni;
+    }
       
       
     
@@ -523,9 +548,9 @@ public abstract class DBLinker {
             String cod_p = rezultate.getString("cod_proiect");
               String in = rezultate.getString("data_inrolarii");
                 String out = rezultate.getString("data_parasire");
-               double ore_lucrate = rezultate.getDouble("ore_lucrate");
+             //  double ore_lucrate = rezultate.getDouble("ore_lucrate");
                
-            return new AngajatProiect(ap,ang,cod_p,in,out,ore_lucrate);
+            return new AngajatProiect(ap,ang,cod_p,in,out);
        }    
             
        public static ArrayList<AngajatProiect> getAngajatProiecte(int id_angajat,String id_proiect) throws SQLException{
@@ -540,8 +565,8 @@ public abstract class DBLinker {
                 String cod_p = rezultate.getString("cod_proiect");
                   String in = rezultate.getString("data_inrolarii");
                 String out = rezultate.getString("data_parasire");
-                   double ore_lucrate = rezultate.getDouble("ore_lucrate");
-                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out,ore_lucrate));
+                //   double ore_lucrate = rezultate.getDouble("ore_lucrate");
+                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out));
             }
             
              return angajat_proiect;
@@ -559,8 +584,8 @@ public abstract class DBLinker {
                 String cod_p = rezultate.getString("cod_proiect");
                 String in = rezultate.getString("data_inrolarii");
                 String out = rezultate.getString("data_parasire");
-                   double ore_lucrate = rezultate.getDouble("ore_lucrate");
-                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out,ore_lucrate));
+                  // double ore_lucrate = rezultate.getDouble("ore_lucrate");
+                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out));
             }
             
              return angajat_proiect;
@@ -579,7 +604,7 @@ public abstract class DBLinker {
                    String in = rezultate.getString("data_inrolarii");
                 String out = rezultate.getString("data_parasire");
                 double ore_lucrate = rezultate.getDouble("ore_lucrate");
-                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out,ore_lucrate));
+                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out));
             }
             
              return angajat_proiect;
@@ -597,8 +622,8 @@ public abstract class DBLinker {
                 String cod_p = rezultate.getString("cod_proiect");
                    String in = rezultate.getString("data_inrolarii");
                 String out = rezultate.getString("data_parasire");
-                  double ore_lucrate = rezultate.getDouble("ore_lucrate");
-                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out,ore_lucrate));
+                  //double ore_lucrate = rezultate.getDouble("ore_lucrate");
+                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out));
             }
             
              return angajat_proiect;

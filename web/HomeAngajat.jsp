@@ -19,11 +19,11 @@
     </head>
     <body>
               <h1 style="text-align: center;color:purple;margin-bottom: 100px;">Time Tracking -- Angajat</h1>
-      
+         <div class="gridMaster">
     <div class="grid">
         
         
-        <a href="Proiecte.jsp" class="blocks"> Proiecte </a>
+        <a href="ProiecteleUnuiAngajat.jsp" class="blocks"> Proiecte </a>
         <a href="Sesiuni.jsp" class="blocks"> Sesiuni </a>
         <a href="StartS.jsp" class="blocks"> Start </a>
     </div>
@@ -31,6 +31,8 @@
          <div class="grid2">
         <a href="/TimeTracking/DelogAng.jsp" class="block"> Delogheaza-ma! </a>
     </div>
+                 </div>
+
         
  <style>
         body{
@@ -48,7 +50,7 @@
         background:#7B68EE;
         }
         .grid {
-        width:40%;
+      // width:100%;
         margin:0 auto;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -56,11 +58,11 @@
         padding: .5rem;
         grid-auto-rows: minmax(100px, auto);
         // background:white;
-        box-shadow:0px 10px 50px 0px black;
-        margin-top: 10%;
+        //box-shadow:0px 10px 50px 0px black;
+       // margin-top: 10%;
         }
         .grid2 {
-        width:40%;
+       //width:100%;
         margin:0 auto;
         display: grid;
         grid-template-columns: repeat(1, 1fr);
@@ -68,7 +70,21 @@
        padding: .5rem;
         grid-auto-rows: minmax(100px, auto);
         //  background:white;
-        box-shadow:0px 10px 50px 0px black;
+        //box-shadow:0px 10px 50px 0px black;
+        }
+        
+        .gridMaster{
+             width:40%;
+      // margin:0 auto;
+    margin-left: 450px;
+        margin-top: 120px;
+    //  margin-right:  300px;
+     //  display: grid;
+         grid-gap: .5rem;
+       padding: .7rem;
+        //grid-auto-rows: minmax(100px, auto);
+            box-shadow:0px 10px 50px 0px black;
+            
         }
         .blocks{
         font-family: monospace;

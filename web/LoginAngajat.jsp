@@ -51,7 +51,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Login Angajat</title>
     </head>
     <body>
          <div class="title">
@@ -64,7 +64,7 @@
              </div>
              <div class="row">
                 <label> Parola </label>
-                <input type="text" required name="pass">
+                <input type="password" required name="pass">
              </div>
               <input type="submit" class="send" value="Apasa-ma">
 

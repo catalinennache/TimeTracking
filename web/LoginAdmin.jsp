@@ -58,7 +58,7 @@
              </div>
              <div class="row">
                 <label> Parola </label>
-                <input type="text" required name="pass">
+                <input type="password" required name="pass">
              </div>
               <input type="submit" class="send" value="Apasa-ma">
 

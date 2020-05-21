@@ -53,6 +53,7 @@
                     <%= angajati_companie.get(i).nume%>
                 </td>
                 <td style="text-align: center;">
+                  
                     <span ref="<%=angajati_companie.get(i).cod_proiect%>" class="open-add-modal">
                         Adauga Angajat
                     </span>
@@ -186,6 +187,7 @@
         
     </style>
     <style>
+   
 
 
         body{

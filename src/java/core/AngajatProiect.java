@@ -28,4 +28,14 @@ public class AngajatProiect {
        this.ore_lucrate = ol;
    }
    
+      protected AngajatProiect( int ap, int angajat, String cod, String in, String out){
+       
+       id_ap=ap;
+       id_angajat=angajat;
+       cod_proiect=cod;
+       data_in=in;
+       data_out=out;
+      
+   }
+   
 }
