@@ -72,7 +72,7 @@ public abstract class DBLinker {
             String parola = rezultate.getString("parola");
             Companie companie_gasita = new Companie(id_companie, user, parola);
             companii.add(companie_gasita);
-             // new companie
+            // new companie
             // .add(0x326);
 
         }
@@ -89,15 +89,17 @@ public abstract class DBLinker {
         ResultSet rezultate = stmt.executeQuery(queryString);
         rezultate.next();
         // de revazut
-        try{
-        String tmp = rezultate.getString("id_companie");
-        if (tmp != null) {
-            int id_companie = Integer.parseInt(tmp);
-            cmp = new Companie(id_companie, user, parola);
-        }else{
+        try {
+            String tmp = rezultate.getString("id_companie");
+            if (tmp != null) {
+                int id_companie = Integer.parseInt(tmp);
+                cmp = new Companie(id_companie, user, parola);
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
             return null;
         }
-        }catch(Exception e){ return null;}
 
         return cmp;
     }
@@ -134,40 +136,39 @@ public abstract class DBLinker {
         }
         return scs;
     }
-    
-    public static boolean addAngajatProiect(String cod_proiect, int id_angajat){
-     boolean scs = true;
+
+    public static boolean addAngajatProiect(String cod_proiect, int id_angajat) {
+        boolean scs = true;
         init();
-        
+
         try {
-           
-            String sql = "Insert into angajat_proiect values(NULL,'" + id_angajat + "','" + cod_proiect+"',sysdate(),NULL)";
+
+            String sql = "Insert into angajat_proiect values(NULL,'" + id_angajat + "','" + cod_proiect + "',sysdate(),NULL)";
 
             Statement stmt = con.createStatement();
             stmt.execute(sql);
-           
+
             disconnect();
 
         } catch (Exception e) {
             scs = false;
             e.printStackTrace();
         }
-        
-        
+
         return scs;
     }
-    
+
     public static boolean addAngajat(Angajat ang, Invitatie inv) {
         boolean scs = true;
         init();
-        
+
         try {
-            String sql = "Insert into angajati values(NULL,'" + inv.cod_invitatie + "','" + ang.nickname+"','"+ang.email+"','"+ang.parola+ "')";
+            String sql = "Insert into angajati values(NULL,'" + inv.cod_invitatie + "','" + ang.nickname + "','" + ang.email + "','" + ang.parola + "')";
 
             Statement stmt = con.createStatement();
             stmt.execute(sql);
-            
-            sql = "update invitatii set invitatie_folosita = true where id_invitatie = '"+inv.cod_invitatie+"'";
+
+            sql = "update invitatii set invitatie_folosita = true where id_invitatie = '" + inv.cod_invitatie + "'";
             stmt.execute(sql);
             disconnect();
 
@@ -177,21 +178,19 @@ public abstract class DBLinker {
         }
         return scs;
     }
-    
-    
-    
-        public static boolean addProiect(Proiect pr) {
+
+    public static boolean addProiect(Proiect pr) {
         boolean scs = true;
         init();
-        
+
         try {
-            String sql = "Insert into proiecte values('" + pr.cod_proiect+"','"+pr.id_companie+"','" + pr.nume+"','"+pr.data_creare+"')";
+            String sql = "Insert into proiecte values('" + pr.cod_proiect + "','" + pr.id_companie + "','" + pr.nume + "','" + pr.data_creare + "')";
 
             Statement stmt = con.createStatement();
             stmt.execute(sql);
-            
-           // sql = "update invitatii set invitatie_folosita = true where id_invitatie = '"+inv.cod_invitatie+"'";
-           // stmt.execute(sql);
+
+            // sql = "update invitatii set invitatie_folosita = true where id_invitatie = '"+inv.cod_invitatie+"'";
+            // stmt.execute(sql);
             disconnect();
 
         } catch (Exception e) {
@@ -200,20 +199,43 @@ public abstract class DBLinker {
         }
         return scs;
     }
-    
-    
-    
-    public static boolean removeCompanie(int id_comp){
-        boolean scs = false;
-        try{
-                Statement stmt;
-                stmt = con.createStatement();
-                stmt.executeUpdate("delete from " + "companii" + " where " + "id_companie" + " = '" + id_comp + "';"); 
-                scs = true;
-        } catch(Exception e){
-            
+
+    public static boolean addSesiune(int id_ap) {
+        boolean scs = true;
+        init();
+        java.util.Date dt = new java.util.Date();
+
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String currentTime = sdf.format(dt);
+        try {
+            String sql = "Insert into sesiuni values(NULL,'" + currentTime + "',NULL,'" + id_ap + "')";
+
+            Statement stmt = con.createStatement();
+            stmt.execute(sql);
+
+            // sql = "update invitatii set invitatie_folosita = true where id_invitatie = '"+inv.cod_invitatie+"'";
+            // stmt.execute(sql);
+            disconnect();
+
+        } catch (Exception e) {
+            scs = false;
+            e.printStackTrace();
         }
-        
+        return scs;
+    }
+
+    public static boolean removeCompanie(int id_comp) {
+        boolean scs = false;
+        try {
+            Statement stmt;
+            stmt = con.createStatement();
+            stmt.executeUpdate("delete from " + "companii" + " where " + "id_companie" + " = '" + id_comp + "';");
+            scs = true;
+        } catch (Exception e) {
+
+        }
+
         return scs;
     }
 
@@ -245,7 +267,7 @@ public abstract class DBLinker {
             boolean folosita = rezultate.getBoolean("invitatie_folosita");
             Invitatie inv_gasita = new Invitatie(cod, folosita, id_companie);
             invitatii.add(inv_gasita);
-             // new companie
+            // new companie
             // .add(0x326);
 
         }
@@ -253,7 +275,7 @@ public abstract class DBLinker {
         return invitatii;
     }
 
-   public static ArrayList<Invitatie> getInvitatii(int id_companie) throws SQLException {
+    public static ArrayList<Invitatie> getInvitatii(int id_companie) throws SQLException {
         init();
         System.out.println(">> entering getInvitatii");
         ArrayList<Invitatie> invitatii = new ArrayList<>();
@@ -266,12 +288,11 @@ public abstract class DBLinker {
             boolean folosita = rezultate.getBoolean("invitatie_folosita");
             Invitatie inv_gasita = new Invitatie(cod, folosita, id_companie);
             invitatii.add(inv_gasita);
-            
-             // new companie
-            // .add(0x326);
 
+            // new companie
+            // .add(0x326);
         }
-        System.out.println("Returning "+invitatii.size()+" invitatii ");
+        System.out.println("Returning " + invitatii.size() + " invitatii ");
 
         return invitatii;
     }
@@ -305,93 +326,94 @@ public abstract class DBLinker {
         return cod_generat;
 
     }
+
     public static Sesiune getSesiune(int id_sesiune) throws SQLException {
         init();
         Sesiune sesi = null;
-        String queryString = ("select * from `timetracking`.`" + "sesiuni" + "`" + " where id_sesiune = '" + id_sesiune + "'" + ";");
+        String queryString = ("select * from `timetracking`.`" + "sesiuni" + "`" + " join" + "`" + "angajat_proiect" + "`" + "  using (id_ap)" + " where id_sesiune = '" + id_sesiune + "'" + ";");
         Statement stmt = con.createStatement();
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
-          
-            long tempstamp_inceput=rezultate.getDate("tempstamp_inceput").toInstant().getEpochSecond();
-            long tempstamp_sfarsit=rezultate.getDate("tempstamp_sfarsit").toInstant().getEpochSecond();
-            int id_ap=rezultate.getInt("id_ap");
-           
-            sesi = new Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit,id_ap);
+
+            String tempstamp_inceput = rezultate.getString("tempstamp_inceput");
+            String tempstamp_sfarsit = rezultate.getString("tempstamp_sfarsit");
+            int id_ap = rezultate.getInt("id_ap");
+            String cod_proiect = rezultate.getString("cod_proiect");
+            sesi = new Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit, id_ap, cod_proiect);
         }
 
         return sesi;
     }
-    
-     public static ArrayList<Sesiune> getSesiuni() throws SQLException {
+
+    public static ArrayList<Sesiune> getSesiuni() throws SQLException {
         init();
         ArrayList<Sesiune> sesiuni = new ArrayList<>();
-        String queryString = ("select * from `timetracking`.`" + "sesiuni" + "`" + ";");
+        String queryString = ("select * from `timetracking`.`" + "sesiuni" + " join" + "`" + "angajat_proiect" + "`" + "  using (id_ap)" + "`" + ";");
         Statement stmt = con.createStatement();
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
             int id_sesiune = rezultate.getInt("id_sesiune");
-            long tempstamp_inceput=rezultate.getDate("tempstamp_inceput").toInstant().getEpochSecond();
-            long tempstamp_sfarsit=rezultate.getDate("tempstamp_sfarsit").toInstant().getEpochSecond();
-            int id_ap=rezultate.getInt("id_ap");
-            Sesiune sesiune_gasita = new Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit,id_ap);
-            sesiuni.add(sesiune_gasita);
-           
-
-        }
-
-        return sesiuni;
-    }
-     
-      public static ArrayList<Sesiune> getSesiuni(int id_ap) throws SQLException {
-        init();
-        ArrayList<Sesiune> sesiuni = new ArrayList<>();
-        String queryString = ("select * from `timetracking`.`" + "sesiuni" + "`" + " where id_ap = '" + id_ap + "' ;");
-        Statement stmt = con.createStatement();
-        ResultSet rezultate = stmt.executeQuery(queryString);
-        while (rezultate.next()) {
-           
-            int id_sesiune = rezultate.getInt("id_sesiune");
-            long tempstamp_inceput=rezultate.getDate("timestamp_inceput").toInstant().getEpochSecond();
-            long tempstamp_sfarsit=rezultate.getDate("timestamp_sfarsit").toInstant().getEpochSecond();
-            Sesiune sesiune_gasita = new  Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit,id_ap);
-          
+            String tempstamp_inceput = rezultate.getString("tempstamp_inceput");
+            String tempstamp_sfarsit = rezultate.getString("tempstamp_sfarsit");
+            int id_ap = rezultate.getInt("id_ap");
+            String cod_proiect = rezultate.getString("cod_proiect");
+            Sesiune sesiune_gasita = new Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit, id_ap, cod_proiect);
             sesiuni.add(sesiune_gasita);
 
         }
 
         return sesiuni;
     }
-         public static ArrayList<Sesiune> getSesiuniAngajat(int id_angajat) throws SQLException {
+
+    public static ArrayList<Sesiune> getSesiuni(int id_ap) throws SQLException {
         init();
         ArrayList<Sesiune> sesiuni = new ArrayList<>();
-       String queryString = ("select * from `timetracking`.`" + "sesiuni" + "`" +" join" + "`"+"angajat_proiect" + "`" +"  using (id_ap)"  +" where id_angajat = '" + id_angajat + "' ;");
+        String queryString = ("select * from `timetracking`.`" + "sesiuni" + "`" + " join" + "`" + "angajat_proiect" + "`" + "  using (id_ap)" + " where id_ap = '" + id_ap + "' ;");
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        while (rezultate.next()) {
+
+            int id_sesiune = rezultate.getInt("id_sesiune");
+            String tempstamp_inceput = rezultate.getString("timestamp_inceput");
+            String tempstamp_sfarsit = rezultate.getString("timestamp_sfarsit");
+            String cod_proiect = rezultate.getString("cod_proiect");
+            Sesiune sesiune_gasita = new Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit, id_ap, cod_proiect);
+
+            sesiuni.add(sesiune_gasita);
+
+        }
+
+        return sesiuni;
+    }
+
+    public static ArrayList<Sesiune> getSesiuniAngajat(int id_angajat) throws SQLException {
+        init();
+        ArrayList<Sesiune> sesiuni = new ArrayList<>();
+        String queryString = ("select * from `timetracking`.`" + "sesiuni" + "`" + " join" + "`" + "angajat_proiect" + "`" + "  using (id_ap)" + " where id_angajat = '" + id_angajat + "' ;");
         // String queryString = ("select * from `timetracking`.`" + "sesiuni" + "`" +" join" + "`"+"angajat_proiect" + "`" +"  using (id_ap)"  +" join" + "`"+"proiecte" + "`" +"  using (cod_proiect)"  +" where id_angajat = '" + id_angajat + "' ;");
 
         Statement stmt = con.createStatement();
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
-           
-            int id_sesiune = rezultate.getInt("id_sesiune");
-               long tempstamp_inceput=rezultate.getLong("timestamp_inceput");
-                long tempstamp_sfarsit=rezultate.getLong("timestamp_final");
 
-           //long tempstamp_inceput=rezultate.getDate("timestamp_inceput").toInstant().getEpochSecond();
-           //long tempstamp_sfarsit=rezultate.getDate("timestamp_final").toInstant().getEpochSecond();
-             int id_ap = rezultate.getInt("id_ap");
-             int id_proiect=rezultate.getInt("cod_proiect");
-            Sesiune sesiune_gasita = new  Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit,id_ap);
-          
+            int id_sesiune = rezultate.getInt("id_sesiune");
+            String tempstamp_inceput = rezultate.getString("timestamp_inceput");
+            String tempstamp_sfarsit = rezultate.getString("timestamp_final");
+
+            //long tempstamp_inceput=rezultate.getDate("timestamp_inceput").toInstant().getEpochSecond();
+            //long tempstamp_sfarsit=rezultate.getDate("timestamp_final").toInstant().getEpochSecond();
+            int id_ap = rezultate.getInt("id_ap");
+            String cod_proiect = rezultate.getString("cod_proiect");
+            Sesiune sesiune_gasita = new Sesiune(id_sesiune, tempstamp_inceput, tempstamp_sfarsit, id_ap, cod_proiect);
+
             sesiuni.add(sesiune_gasita);
 
         }
 
         return sesiuni;
     }
-      
-      
-    
-     public static ArrayList<Angajat> getAngajati() throws SQLException {
+
+    public static ArrayList<Angajat> getAngajati() throws SQLException {
         init();
         ArrayList<Angajat> angajati = new ArrayList<>();
         String queryString = ("select * from `timetracking`.`" + "angajati" + "`" + ";");
@@ -403,20 +425,19 @@ public abstract class DBLinker {
             String nickname = rezultate.getString("nickname");
             String email = rezultate.getString("email");
             String parola = rezultate.getString("parola");
-           
-            Angajat angajat_gasit = new Angajat(id_sesiune, id_invitatie, nickname,email,parola);
+
+            Angajat angajat_gasit = new Angajat(id_sesiune, id_invitatie, nickname, email, parola);
             angajati.add(angajat_gasit);
-           
 
         }
 
         return angajati;
     }
-     
-          public static ArrayList<Angajat> getAngajati(int id_companie) throws SQLException {
+
+    public static ArrayList<Angajat> getAngajati(int id_companie) throws SQLException {
         init();
         ArrayList<Angajat> angajati = new ArrayList<>();
-        String queryString = ("select * from `timetracking`.`" + "angajati" + "` where id_invitatie in (select id_invitatie from invitatii where id_companie ='"+id_companie+"')"+  ";");
+        String queryString = ("select * from `timetracking`.`" + "angajati" + "` where id_invitatie in (select id_invitatie from invitatii where id_companie ='" + id_companie + "')" + ";");
         Statement stmt = con.createStatement();
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
@@ -425,209 +446,278 @@ public abstract class DBLinker {
             String nickname = rezultate.getString("nickname");
             String email = rezultate.getString("email");
             String parola = rezultate.getString("parola");
-            
-            Angajat angajat_gasit = new Angajat(id_sesiune, id_invitatie, nickname,email,parola);
+
+            Angajat angajat_gasit = new Angajat(id_sesiune, id_invitatie, nickname, email, parola);
             angajati.add(angajat_gasit);
-           
 
         }
 
         return angajati;
     }
-     
-      public static Angajat getAngajat(int id_angajat) throws SQLException {
+
+    public static Angajat getAngajat(int id_angajat) throws SQLException {
         init();
-         Angajat ang = null;
+        Angajat ang = null;
         String queryString = ("select * from `timetracking`.`" + "angajati" + "`" + " where id_angajat = '" + id_angajat + "'" + ";");
         Statement stmt = con.createStatement();
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
-           int id_sesiune = rezultate.getInt("id_angajat");
+            int id_sesiune = rezultate.getInt("id_angajat");
             String id_invitatie = rezultate.getString("id_invitatie");
             String nickname = rezultate.getString("nickname");
             String email = rezultate.getString("email");
             String parola = rezultate.getString("parola");
-           
-          ang = new Angajat(id_sesiune, id_invitatie, nickname,email,parola);
+
+            ang = new Angajat(id_sesiune, id_invitatie, nickname, email, parola);
             //angajati.add(angajat_gasit);
         }
 
         return ang;
     }
-      
-         public static Angajat getAngajat(String porecla, String password) throws SQLException {
+
+    public static Angajat getAngajat(String porecla, String password) throws SQLException {
         init();
-         Angajat ang = null;
-        String queryString = ("select * from `timetracking`.`" + "angajati" + "`" +  " where nickname = '" + porecla + "'" + " and parola = '" + password + "';");
+        Angajat ang = null;
+        String queryString = ("select * from `timetracking`.`" + "angajati" + "`" + " where nickname = '" + porecla + "'" + " and parola = '" + password + "';");
         Statement stmt = con.createStatement();
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
-           int id_sesiune = rezultate.getInt("id_angajat");
+            int id_sesiune = rezultate.getInt("id_angajat");
             String id_invitatie = rezultate.getString("id_invitatie");
             String email = rezultate.getString("email");
-           
+
             String parola = rezultate.getString("parola");
-           
-          ang = new Angajat(id_sesiune, id_invitatie, porecla,email,parola);
+
+            ang = new Angajat(id_sesiune, id_invitatie, porecla, email, parola);
             //angajati.add(angajat_gasit);
         }
 
         return ang;
     }
-      
-      
-       public static Proiect getProiect(String cod_proiect) throws SQLException {
+
+    public static Proiect getProiect(String cod_proiect) throws SQLException {
         init();
         Proiect proiect = null;
         String queryString = ("select * from `timetracking`.`" + "proiecte" + "`" + " where cod_proiect = '" + cod_proiect + "'" + ";");
         Statement stmt = con.createStatement();
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
-          
-            String nume=rezultate.getString("nume");
-            String  data_creare=rezultate.getString("data_creare");
-           
-           
-            proiect =  new Proiect(cod_proiect, nume, data_creare,rezultate.getInt("id_companie") );
+
+            String nume = rezultate.getString("nume");
+            String data_creare = rezultate.getString("data_creare");
+
+            proiect = new Proiect(cod_proiect, nume, data_creare, rezultate.getInt("id_companie"));
         }
 
         return proiect;
     }
-       
-       public static ArrayList<Proiect> getProiects() throws SQLException {
+
+    public static ArrayList<Proiect> getProiects() throws SQLException {
         init();
         ArrayList<Proiect> proiecte = new ArrayList<>();
         String queryString = ("select * from `timetracking`.`" + "proiect" + "`" + ";");
         Statement stmt = con.createStatement();
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
-            String cod_proiect=rezultate.getString("cod_proiect");
-            String nume=rezultate.getString("nume");
-            String data_creare=rezultate.getString("data_creare");
-           Proiect proiect_gasit =  new Proiect(cod_proiect, nume, data_creare,rezultate.getInt("id_companie") );
+            String cod_proiect = rezultate.getString("cod_proiect");
+            String nume = rezultate.getString("nume");
+            String data_creare = rezultate.getString("data_creare");
+            Proiect proiect_gasit = new Proiect(cod_proiect, nume, data_creare, rezultate.getInt("id_companie"));
             proiecte.add(proiect_gasit);
-           
-
 
         }
 
         return proiecte;
     }
-       
-           
-       public static ArrayList<Proiect> getProiects(int id_companie) throws SQLException {
+
+    public static ArrayList<Proiect> getProiects(int id_companie) throws SQLException {
         init();
         ArrayList<Proiect> proiecte = new ArrayList<>();
-        String queryString = ("select * from `timetracking`.`" + "proiecte" + "`" + " where id_companie = '"+id_companie+"';");
+        String queryString = ("select * from `timetracking`.`" + "proiecte" + "`" + " where id_companie = '" + id_companie + "';");
         Statement stmt = con.createStatement();
         ResultSet rezultate = stmt.executeQuery(queryString);
         while (rezultate.next()) {
-            String cod_proiect=rezultate.getString("cod_proiect");
-            String nume=rezultate.getString("nume");
-            String data_creare=rezultate.getString("data_creare");
-           Proiect proiect_gasit = new Proiect(cod_proiect, nume, data_creare,rezultate.getInt("id_companie") );
+            String cod_proiect = rezultate.getString("cod_proiect");
+            String nume = rezultate.getString("nume");
+            String data_creare = rezultate.getString("data_creare");
+            Proiect proiect_gasit = new Proiect(cod_proiect, nume, data_creare, rezultate.getInt("id_companie"));
             proiecte.add(proiect_gasit);
-           
-
 
         }
 
         return proiecte;
     }
-       
-       
-       public static AngajatProiect getAngajatProiect(int ap) throws SQLException{
-            init();
-         
-            String queryString = ("select * from `timetracking`.`" + "angajat_proiect" + "` where id_ap = '" +ap+ "' ;");
-            Statement stmt = con.createStatement();
-            ResultSet rezultate = stmt.executeQuery(queryString);
-            rezultate.next();
-            //AngajatProiect( int ap, int angajat, String cod, long in, long out)
+
+    public static AngajatProiect getAngajatProiect(int ap) throws SQLException {
+        init();
+
+        String queryString = ("select * from `timetracking`.`" + "angajat_proiect" + "` where id_ap = '" + ap + "' ;");
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        rezultate.next();
+        //AngajatProiect( int ap, int angajat, String cod, long in, long out)
+        int ang = rezultate.getInt("id_angajat");
+        String cod_p = rezultate.getString("cod_proiect");
+        String in = rezultate.getString("data_inrolarii");
+        String out = rezultate.getString("data_parasire");
+        double ore_lucrate = rezultate.getDouble("ore_lucrate");
+
+        return new AngajatProiect(ap, ang, cod_p, in, out);
+    }
+
+    public static ArrayList<AngajatProiect> getAngajatProiecte(int id_angajat, String id_proiect) throws SQLException {
+        init();
+        ArrayList<AngajatProiect> angajat_proiect = new ArrayList<>();
+        String queryString = ("select * from `timetracking`.`" + "angajat_proiect" + "` where id_angajat = '" + id_angajat + "' and cod_proiect = '" + id_proiect + "' ;");
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        while (rezultate.next()) {
+            int ap = rezultate.getInt("id_ap");
             int ang = rezultate.getInt("id_angajat");
             String cod_p = rezultate.getString("cod_proiect");
-              String in = rezultate.getString("data_inrolarii");
-                String out = rezultate.getString("data_parasire");
-             //  double ore_lucrate = rezultate.getDouble("ore_lucrate");
-               
-            return new AngajatProiect(ap,ang,cod_p,in,out);
-       }    
-            
-       public static ArrayList<AngajatProiect> getAngajatProiecte(int id_angajat,String id_proiect) throws SQLException{
-             init();
-            ArrayList<AngajatProiect> angajat_proiect = new ArrayList<>();
-            String queryString = ("select * from `timetracking`.`" + "angajat_proiect" + "` where id_angajat = '" +id_angajat+ "' and cod_proiect = '"+id_proiect+"' ;");
-            Statement stmt = con.createStatement();
-            ResultSet rezultate = stmt.executeQuery(queryString);
-            while(rezultate.next()){
-                int ap = rezultate.getInt("id_ap");
-                int ang = rezultate.getInt("id_angajat");
-                String cod_p = rezultate.getString("cod_proiect");
-                  String in = rezultate.getString("data_inrolarii");
-                String out = rezultate.getString("data_parasire");
-                //   double ore_lucrate = rezultate.getDouble("ore_lucrate");
-                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out));
-            }
-            
-             return angajat_proiect;
-       }    
-           
-       public static ArrayList<AngajatProiect> getAngajatProiecte(int id_angajat) throws SQLException{
+            String in = rezultate.getString("data_inrolarii");
+            String out = rezultate.getString("data_parasire");
+            //   double ore_lucrate = rezultate.getDouble("ore_lucrate");
+            angajat_proiect.add(new AngajatProiect(ap, ang, cod_p, in, out));
+        }
+
+        return angajat_proiect;
+    }
+
+    public static ArrayList<AngajatProiect> getAngajatProiecte(int id_angajat) throws SQLException {
         init();
-            ArrayList<AngajatProiect> angajat_proiect = new ArrayList<>();
-            String queryString = ("select * from `timetracking`.`" + "angajat_proiect" + "` where id_angajat = '" +id_angajat+"' ;");
-            Statement stmt = con.createStatement();
-            ResultSet rezultate = stmt.executeQuery(queryString);
-            while(rezultate.next()){
-                int ap = rezultate.getInt("id_ap");
-                int ang = rezultate.getInt("id_angajat");
-                String cod_p = rezultate.getString("cod_proiect");
-                String in = rezultate.getString("data_inrolarii");
-                String out = rezultate.getString("data_parasire");
-                  // double ore_lucrate = rezultate.getDouble("ore_lucrate");
-                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out));
-            }
-            
-             return angajat_proiect;
-       }
-       
-       public static ArrayList<AngajatProiect> getAngajatiProiect(String id_proiect) throws SQLException{
-            init();
-            ArrayList<AngajatProiect> angajat_proiect = new ArrayList<>();
-            String queryString = ("select angajat_proiect.*,(select sum(TIMESTAMPDIFF(HOUR,timestamp_inceput,timestamp_final)) from sesiuni where sesiuni.id_ap = id_ap) as ore_lucrate  from `timetracking`.`" + "angajat_proiect" + "` where cod_proiect = '"+id_proiect+"' ;");
-            Statement stmt = con.createStatement();
-            ResultSet rezultate = stmt.executeQuery(queryString);
-            while(rezultate.next()){
-                int ap = rezultate.getInt("id_ap");
-                int ang = rezultate.getInt("id_angajat");
-                String cod_p = rezultate.getString("cod_proiect");
-                   String in = rezultate.getString("data_inrolarii");
-                String out = rezultate.getString("data_parasire");
-                double ore_lucrate = rezultate.getDouble("ore_lucrate");
-                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out));
-            }
-            
-             return angajat_proiect;
-       }
-       
-       public static ArrayList<AngajatProiect> getAngajatiProiecte() throws SQLException{
-             init();
-            ArrayList<AngajatProiect> angajat_proiect = new ArrayList<>();
-            String queryString = ("select * from `timetracking`.`" + "angajat_proiect" + "`;");
-            Statement stmt = con.createStatement();
-            ResultSet rezultate = stmt.executeQuery(queryString);
-            while(rezultate.next()){
-                int ap = rezultate.getInt("id_ap");
-                int ang = rezultate.getInt("id_angajat");
-                String cod_p = rezultate.getString("cod_proiect");
-                   String in = rezultate.getString("data_inrolarii");
-                String out = rezultate.getString("data_parasire");
-                  //double ore_lucrate = rezultate.getDouble("ore_lucrate");
-                angajat_proiect.add(new AngajatProiect(ap,ang,cod_p,in,out));
-            }
-            
-             return angajat_proiect;
-       }
-       
+        ArrayList<AngajatProiect> angajat_proiect = new ArrayList<>();
+        String queryString = ("select ap.*,(select sum(TIMESTAMPDIFF(HOUR,timestamp_inceput,timestamp_final)) from sesiuni where sesiuni.id_ap = ap.id_ap) as ore_lucrate  from " + "angajat_proiect ap" + " where id_angajat = '" + id_angajat + "' ;");
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        while (rezultate.next()) {
+            int ap = rezultate.getInt("id_ap");
+            int ang = rezultate.getInt("id_angajat");
+            String cod_p = rezultate.getString("cod_proiect");
+            String in = rezultate.getString("data_inrolarii");
+            String out = rezultate.getString("data_parasire");
+            double ore_lucrate = rezultate.getDouble("ore_lucrate");
+            angajat_proiect.add(new AngajatProiect(ap, ang, cod_p, in, out, ore_lucrate));
+        }
+
+        return angajat_proiect;
+    }
+
+    public static ArrayList<AngajatProiect> getAngajatiProiect(String cod_proiect) throws SQLException {
+        init();
+        ArrayList<AngajatProiect> angajat_proiect = new ArrayList<>();
+        String queryString = ("select ap.*,(select sum(TIMESTAMPDIFF(HOUR,timestamp_inceput,timestamp_final)) from sesiuni where sesiuni.id_ap = ap.id_ap) as ore_lucrate  from " + "angajat_proiect ap" + " where cod_proiect = '" + cod_proiect + "' ;");
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        while (rezultate.next()) {
+            int ap = rezultate.getInt("id_ap");
+            int ang = rezultate.getInt("id_angajat");
+            String cod_p = rezultate.getString("cod_proiect");
+            String in = rezultate.getString("data_inrolarii");
+            String out = rezultate.getString("data_parasire");
+            double ore_lucrate = rezultate.getDouble("ore_lucrate");
+            angajat_proiect.add(new AngajatProiect(ap, ang, cod_p, in, out, ore_lucrate));
+        }
+
+        return angajat_proiect;
+    }
+
+    public static ArrayList<AngajatProiect> getAngajatiProiecte() throws SQLException {
+        init();
+        ArrayList<AngajatProiect> angajat_proiect = new ArrayList<>();
+        String queryString = ("select * from `timetracking`.`" + "angajat_proiect" + "`;");
+        Statement stmt = con.createStatement();
+        ResultSet rezultate = stmt.executeQuery(queryString);
+        while (rezultate.next()) {
+            int ap = rezultate.getInt("id_ap");
+            int ang = rezultate.getInt("id_angajat");
+            String cod_p = rezultate.getString("cod_proiect");
+            String in = rezultate.getString("data_inrolarii");
+            String out = rezultate.getString("data_parasire");
+            //double ore_lucrate = rezultate.getDouble("ore_lucrate");
+            angajat_proiect.add(new AngajatProiect(ap, ang, cod_p, in, out));
+        }
+
+        return angajat_proiect;
+    }
+
        //lipseste get dupa id_ap
+    public static boolean endSesiune(int id_ap) {
+
+        boolean scs = true;
+        init();
+
+        try {
+
+            Statement stmt = con.createStatement();
+            String sql1 = "select id_sesiune from sesiuni where id_ap = '" + id_ap + "' order by timestamp_inceput desc";
+            ResultSet rezultate = stmt.executeQuery(sql1);
+            rezultate.next();
+            int id_sesiune = rezultate.getInt(1);
+            java.util.Date dt = new java.util.Date();
+
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            String currentTime = sdf.format(dt);
+            String sq2 = "update sesiuni set timestamp_final = '" + currentTime +"' where id_sesiune = '"+id_sesiune+"'";
+            System.out.println(sq2);
+            stmt.execute(sq2);
+            disconnect();
+           
+
+        } catch (Exception e) {
+            scs = false;
+            e.printStackTrace();
+        }
+        
+        return scs;
+
+    }
+    
+    
+    public static int numaraSesiuni(int id_ap){
+        
+        boolean scs = true;
+        init();
+        int count = -1;
+        try {
+
+            Statement stmt = con.createStatement();
+            String sql1 = "select count(*) from sesiuni where id_ap = '"+id_ap+"'";
+            ResultSet rezultate = stmt.executeQuery(sql1);
+            rezultate.next();
+             count = rezultate.getInt(1);
+            disconnect();
+           
+
+        } catch (Exception e) {
+            scs = false;
+            e.printStackTrace();
+        }
+        
+        return count;
+    }
+    
+    public static int numaraSesiuniTerminate(int id_ap){
+      boolean scs = true;
+        init();
+        int count = -1;
+        try {
+
+            Statement stmt = con.createStatement();
+            String sql1 = "select count(*) from sesiuni where id_ap = '"+id_ap+"' and timestamp_final is not null";
+            ResultSet rezultate = stmt.executeQuery(sql1);
+            rezultate.next();
+             count = rezultate.getInt(1);
+            disconnect();
+           
+
+        } catch (Exception e) {
+            scs = false;
+            e.printStackTrace();
+        }
+        
+        return count;
+      
+    }
 }

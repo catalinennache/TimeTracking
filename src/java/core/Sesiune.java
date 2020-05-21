@@ -13,15 +13,17 @@ public class Sesiune {
  
    
     public int id_sesiune;
-    public long timestamp_inceput;
-    public long timestamp_sfarsit;
+    public String timestamp_inceput;
+    public String timestamp_sfarsit;
     public int id_ap;
+    public String cod_proiect;
     
-    protected Sesiune( int id, long inceput, long sfarsit, int id_ap){
+    protected Sesiune( int id, String inceput, String sfarsit, int id_ap,String proiect){
         id_sesiune=id;
         timestamp_inceput=inceput;
         timestamp_sfarsit=sfarsit;
         this.id_ap=id_ap;
+        this.cod_proiect = proiect;
         
                 
         
