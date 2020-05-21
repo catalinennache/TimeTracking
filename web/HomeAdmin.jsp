@@ -19,7 +19,7 @@
     </head>
     <body>
         <h1 style="text-align: center;color:purple;margin-bottom: 100px;">Time Tracking -- Admin</h1>
-      
+     <div class="gridMaster"> 
     <div class="grid">
         <a href="Invitatii.jsp" class="blocks"> Invitatii</a>
         <a href="GenInv.jsp" class="blocks"> Genereaza invitatie </a>
@@ -31,7 +31,10 @@
        
          <div class="grid2">
         <a href="/TimeTracking/Delog.jsp" class="block"> Delogheaza-ma! </a>
-    </div>
+    </div>   
+     </div>
+
+         
      
       <style>
       body{
@@ -48,8 +51,10 @@
             .block{
              background:#7B68EE;
           }
+          
+          
       .grid {
-          width:40%;
+        // width:40%;
           margin:0 auto;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -57,19 +62,37 @@
             padding: .5rem;
             grid-auto-rows: minmax(100px, auto);
            // background:white;
-            box-shadow:0px 10px 50px 0px black;
+            //box-shadow:0px 10px 50px 0px black;
       }
              .grid2 {
-          width:40%;
+          //width:40%;
           margin:0 auto;
             display: grid;
             grid-template-columns: repeat(1, 1fr);
-            grid-gap: .5rem;
+           grid-gap: .5rem;
             padding: .5rem;
             grid-auto-rows: minmax(100px, auto);
           //  background:white;
+            //box-shadow:0px 10px 50px 0px black;
+            
+         
+            }
+
+       .gridMaster{
+             width:40%;
+      // margin:0 auto;
+    margin-left: 450px;
+        margin-top: 120px;
+    //  margin-right:  300px;
+     //  display: grid;
+         grid-gap: .5rem;
+       padding: .7rem;
+        //grid-auto-rows: minmax(100px, auto);
             box-shadow:0px 10px 50px 0px black;
-}
+            
+        }
+
+
  .blocks{
      font-family: monospace;
      text-decoration: none;;
