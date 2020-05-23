@@ -42,7 +42,7 @@
             <th style="text-align: center;font-size:30px; color: indigo;  padding: 20px;"> Cod Proiect</th>
             <th style="text-align: center;font-size:30px; color: indigo;  padding: 20px;"> Data Ora Inceput </th>
             <th style="text-align: center;font-size:30px; color: indigo;  padding: 20px;"> Data Ora Sfarsit</th>
-
+            <th style="text-align: center;font-size:30px; color: indigo;  padding: 20px;"> Comentariu </th>
         </thead>
 
 
@@ -67,7 +67,9 @@
                 <td style="text-align: center;" >
                     <%= angajat_sesiune.get(i).timestamp_sfarsit%>
                 </td>
-               
+                <td style="text-align: center;" >
+                    <%= angajat_sesiune.get(i).descriere_munca%>
+                </td>
                
 
 

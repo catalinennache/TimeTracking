@@ -26,7 +26,7 @@
         <a href="Proiecte.jsp" class="blocks"> Proiecte </a>
         <a href="AddProiect.jsp" class="blocks"> Creaza Proiect </a>
         <a href="Angajati.jsp" class="blocks"> Angajati </a>
-        <a href="Analytics.jsp" class="blocks"> Analytics </a>
+        <a href="AnalyticsAdmin.jsp" class="blocks"> Analytics </a>
     </div>
        
          <div class="grid2">

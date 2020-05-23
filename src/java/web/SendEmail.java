@@ -5,9 +5,10 @@
  */
 package web;
 
-import core.DBLinker;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Enache
  */
-@WebServlet(name = "StartStop", urlPatterns = {"/StartStop"})
-public class StartStop extends HttpServlet {
+@WebServlet(name = "SendEmail", urlPatterns = {"/SendEmail"})
+public class SendEmail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +39,10 @@ public class StartStop extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet StartStop</title>");            
+            out.println("<title>Servlet SendEmail</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet StartStop at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SendEmail at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -73,28 +74,17 @@ public class StartStop extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+      
+        String email = request.getParameter("email");
         
-        String id_ap_raw = request.getParameter("id_ap");
-        String start_raw = request.getParameter("is_start");
-        String descriere = "";
-        int id_ap = Integer.parseInt(id_ap_raw);
-        boolean start = Boolean.parseBoolean(start_raw);
+        URL url = new URL("http://localhost:80/EmailHelper?to="+email);
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.connect();
         
-        if(!start){
-          descriere =  request.getParameter("descriere");
-            
-        }
-        boolean scs = false;
-        
-        if(start){
-          scs = DBLinker.addSesiune(id_ap);
-        }else{
-          scs = DBLinker.endSesiune(id_ap,descriere);
-        }
-        
-        response.getWriter().write("{\"scs\":"+scs+"}");
-        
-     
+      
+        response.getWriter().write("{\"scs\":"+(conn.getResponseCode() == 200)+"}");
+ 
     }
 
     /**

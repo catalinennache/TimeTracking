@@ -57,10 +57,6 @@
                     <span ref="<%=angajati_companie.get(i).cod_proiect%>" class="open-add-modal">
                         Adauga Angajat
                     </span>
-                    |
-                    <span>
-                        Sterge Proiect
-                    </span>
 
                 </td>
 

@@ -101,6 +101,11 @@
                 var id_ap  = $(ev.target).attr("id_ap");
                 var is_start = $(ev.target).hasClass("start");
                 var payload = {id_ap:id_ap,is_start: is_start};
+                if(!is_start){
+                    var comentariu = prompt("Introduceti o descriere a muncii depuse :)");
+                    payload.descriere = comentariu;
+                }
+               
                 $.ajax({
                     url:"/TimeTracking/StartStop",
                     type:"POST",

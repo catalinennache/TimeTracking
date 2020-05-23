@@ -26,7 +26,7 @@
         
         <a href="ProiecteleUnuiAngajat.jsp" class="blocks"> Proiecte </a>
         <a href="Sesiuni.jsp" class="blocks"> Sesiuni </a>
-    
+        <a href="AnalyticsAngajat.jsp" class="blocks"> Sesiuni </a>
     </div>
        
          <div class="grid2">
