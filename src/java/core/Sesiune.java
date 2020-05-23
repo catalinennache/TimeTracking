@@ -17,15 +17,14 @@ public class Sesiune {
     public String timestamp_sfarsit;
     public int id_ap;
     public String cod_proiect;
+    public String descriere_munca;
     
-    protected Sesiune( int id, String inceput, String sfarsit, int id_ap,String proiect){
+    protected Sesiune( int id, String inceput, String sfarsit, int id_ap,String proiect,String descriere_munca){
         id_sesiune=id;
         timestamp_inceput=inceput;
         timestamp_sfarsit=sfarsit;
         this.id_ap=id_ap;
         this.cod_proiect = proiect;
-        
-                
-        
+        this.descriere_munca = descriere_munca;
     }
 }
