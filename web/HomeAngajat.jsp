@@ -26,7 +26,7 @@
         
         <a href="ProiecteleUnuiAngajat.jsp" class="blocks"> Proiecte </a>
         <a href="Sesiuni.jsp" class="blocks"> Sesiuni </a>
-        <a href="AnalyticsAngajat.jsp" class="blocks"> Sesiuni </a>
+        <a href="AnalyticsAngajat.jsp" class="blocks"> Analytics </a>
     </div>
        
          <div class="grid2">
@@ -58,7 +58,7 @@
       // width:100%;
         margin:0 auto;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         grid-gap: .5rem;
         padding: .5rem;
         grid-auto-rows: minmax(100px, auto);
