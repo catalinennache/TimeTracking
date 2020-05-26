@@ -71,42 +71,7 @@
 <body>
     <h1 style="text-align:center;color:purple;">Analytics</h1>
 
-    <table>
-        <thead>
-        <th style="text-align: center;font-size:30px; color: indigo;"> Cod Proiect </th>
-        <th style="text-align: center;font-size:30px; color: indigo;">  Ore Lucrate </th>
-      
-
-    </thead>
-
-
-
-
-
-    <tbody>
-        <% for (int i = 0; i < proiecte.size(); i++) {
-        
-     
-        %>
-        <tr class="<%= i == proiecte.size() - 1 ? "last" : ""%>">
-            <td style="text-align: center;" >
-                <%= proiecte.get(i).cod_proiect%>
-            </td>
-          
-            <td style="text-align: center;" >
-                <%= proiect_numar_ore.get(proiecte.get(i)) %>
-                <!--suma dupa orele lucrate in toate sesiunile acestui proiect-->
-            </td>
-           
-
-
-        </tr>
-        <% }%>
-
-
-
-    </tbody>
-</table>
+  
           <table>
         <thead>
         <th style="text-align: center;font-size:30px; color: indigo;"> Cod Proiect </th>
@@ -235,27 +200,7 @@
         
         
         <script>
-            $('.control').on('click',function(ev){
-                var id_ap  = $(ev.target).attr("id_ap");
-                var is_start = $(ev.target).hasClass("start");
-                var payload = {id_ap:id_ap,is_start: is_start};
-                if(!is_start){
-                    var comentariu = prompt("Introduceti o descriere a muncii depuse :)");
-                    payload.descriere = comentariu;
-                }
-               
-                $.ajax({
-                    url:"/TimeTracking/StartStop",
-                    type:"POST",
-                    data:payload,
-                    success:function(data){
-                        window.location.reload();
-                    },
-                    error:function(err){
-                        
-                    }
-                })
-            });
+
             
             $('.send-mail').on('click',function(ev){
                 
@@ -268,6 +213,7 @@
                     success:function(data){
                     
                         if(data.indexOf("true")>=0)
+                            
                             alert("Email trimis!")
                         else
                             alert("A aparut o problema :/");
