@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -764,8 +765,8 @@ public abstract class DBLinker {
         return rezultat;
     }
 
-    public static String getMinDate(int id_angajat) {
-        String date = "";
+    public static Date getMinDate(int id_angajat) {
+        Date date = null;
         try {
             init();
 
@@ -774,7 +775,7 @@ public abstract class DBLinker {
                 Statement stmt = con.createStatement();
                 ResultSet rezultate = stmt.executeQuery(queryString);
                 rezultate.next();
-                date = rezultate.getString(1);
+                date = rezultate.getDate(1);
             } catch (Exception e) {
                 e.printStackTrace();
 
@@ -783,6 +784,35 @@ public abstract class DBLinker {
         } catch (Exception e) {
         }
         return date;
+    }
+    
+    public static double getHoursOnInterval(int id_angajat, Date cap_saptamana, Date coada_saptamana){
+        double rezultat = 0;
+     try {
+       
+
+SimpleDateFormat sdf = 
+     new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+String cap = sdf.format(cap_saptamana);
+String coada = sdf.format(coada_saptamana);
+            String queryString = ("select ap.*,(select sum(TIMESTAMPDIFF(HOUR,timestamp_inceput,timestamp_final)) from sesiuni where timestamp_inceput < '"+cap+"' and timestamp_final > '"+coada+"') as ore_lucrate  from " + "angajat_proiect ap" + " where id_angajat = '" + id_angajat + "' ;");
+            System.out.println(queryString);
+            Statement stmt = con.createStatement();
+            ResultSet rezultate = stmt.executeQuery(queryString);
+            rezultate.next();
+            rezultat = rezultate.getDouble("ore_lucrate");
+            System.out.println("got "+rezultat);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        try {
+          //  disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rezultat;
     }
 
     public static ArrayList<Angajat> getLateUsers() {

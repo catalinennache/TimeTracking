@@ -3,27 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/web/AnalyticsAdmin.jsp</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/web/GenInv.jsp</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/src/java/web/StartStop.java</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/web/Sesiuni.jsp</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/web/HomeAdmin.jsp</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/web/HomeAngajat.jsp</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/web/DelogAng.jsp</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/src/java/core/Proiect.java</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/src/java/web/webTest.java</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/src/java/core/Sesiune.java</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/web/Delog.jsp</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/web/ProiecteleUnuiAngajat.jsp</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/web/Proiect.jsp</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/src/java/core/AngajatProiect.java</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/web/Angajati.jsp</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/web/Proiecte.jsp</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/src/java/web/SendEmail.java</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/web/CreateProject.jsp</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/web/AddProiect.jsp</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/src/java/core/Angajat.java</file>
-            <file>file:/C:/Users/Ana%20Dima/Desktop/TimeTracking/web/AnalyticsAngajat.jsp</file>
+            <file>file:/C:/Users/Enache/Documents/NetBeansProjects/TimeTracking/web/Proiect.jsp</file>
+            <file>file:/C:/Users/Enache/Documents/NetBeansProjects/TimeTracking/web/Sesiuni.jsp</file>
+            <file>file:/C:/Users/Enache/Documents/NetBeansProjects/TimeTracking/src/java/core/Sesiune.java</file>
+            <file>file:/C:/Users/Enache/Documents/NetBeansProjects/TimeTracking/src/java/core/AngajatProiect.java</file>
+            <file>file:/C:/Users/Enache/Documents/NetBeansProjects/TimeTracking/web/Proiecte.jsp</file>
+            <file>file:/C:/Users/Enache/Documents/NetBeansProjects/TimeTracking/web/ProiecteleUnuiAngajat.jsp</file>
+            <file>file:/C:/Users/Enache/Documents/NetBeansProjects/TimeTracking/web/CreateProject.jsp</file>
+            <file>file:/C:/Users/Enache/Documents/NetBeansProjects/TimeTracking/src/java/web/webTest.java</file>
+            <file>file:/C:/Users/Enache/Documents/NetBeansProjects/TimeTracking/src/java/web/StartStop.java</file>
+            <file>file:/C:/Users/Enache/Documents/NetBeansProjects/TimeTracking/web/HomeAdmin.jsp</file>
+            <file>file:/C:/Users/Enache/Documents/NetBeansProjects/TimeTracking/src/java/core/DBLinker.java</file>
+            <file>file:/C:/Users/Enache/Documents/NetBeansProjects/TimeTracking/web/AddProiect.jsp</file>
+            <file>file:/C:/Users/Enache/Documents/NetBeansProjects/TimeTracking/web/HomeAngajat.jsp</file>
+            <file>file:/C:/Users/Enache/Documents/NetBeansProjects/TimeTracking/web/Invitatii.jsp</file>
+            <file>file:/C:/Users/Enache/Documents/NetBeansProjects/TimeTracking/web/AnalyticsAngajat.jsp</file>
         </group>
     </open-files>
 </project-private>

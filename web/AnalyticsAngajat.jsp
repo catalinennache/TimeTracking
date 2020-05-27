@@ -1,4 +1,6 @@
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Calendar"%>
 <%@page import="java.util.Date"%>
 <%@page import="core.Companie"%>
 <%@page import="java.util.HashMap"%>
@@ -42,9 +44,49 @@
         
         
        
-       //String data_minima_bruta = DBLinker.getMinDate(angajat.id_angajat);
+       Date data_minima = DBLinker.getMinDate(angajat.id_angajat);
        //Date data_minima = new Date(data_minima_bruta);
-       Date cap_saptamana = new Date();
+       System.out.println(data_minima);
+       
+      Calendar c = Calendar.getInstance();
+      c.setTime(new Date());
+      c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+      Date cap_saptamana = c.getTime();
+       c.add(Calendar.DATE, -7);
+       Date coada_saptamana = c.getTime();
+      double max_h = 0;
+      Date cap_saptamana_max = cap_saptamana;
+      Date coada_saptamana_max = coada_saptamana;
+      double read_h= DBLinker.getHoursOnInterval(angajat.id_angajat,cap_saptamana,coada_saptamana);
+      
+        if(read_h>max_h){
+            System.out.println("max updated "+max_h+" >> "+read_h);
+            max_h = read_h;
+            cap_saptamana_max = cap_saptamana;
+            coada_saptamana_max = coada_saptamana;
+        }
+    
+      
+      while(read_h != 0){
+        cap_saptamana = coada_saptamana;
+        c.add(Calendar.DATE, -7);
+        coada_saptamana = c.getTime();
+        read_h= DBLinker.getHoursOnInterval(angajat.id_angajat,cap_saptamana,coada_saptamana);
+        if(read_h>max_h){
+            System.out.println("max updated "+max_h+" >> "+read_h);
+            max_h = read_h;
+            cap_saptamana_max = cap_saptamana;
+            coada_saptamana_max = coada_saptamana;
+        }
+    
+      }
+      SimpleDateFormat sdf = 
+     new SimpleDateFormat("yyyy-MM-dd");
+
+String cap = sdf.format(cap_saptamana_max);
+String coada = sdf.format(coada_saptamana_max);
+    
+      System.out.println(max_h);
        
 
     %>
@@ -68,7 +110,7 @@
                     Cea mai productiva saptamana
                 </label>
 
-                <input type="text" class="tag" readonly>
+                <input type="text" class="tag" readonly value = "<%= coada+" - "+ cap%>">
 
             </div> 
 
