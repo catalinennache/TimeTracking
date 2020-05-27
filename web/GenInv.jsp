@@ -1,8 +1,4 @@
-<%-- 
-    Document   : GenInv
-    Created on : May 10, 2020, 3:51:00 PM
-    Author     : Enache
---%>
+
 
 <%@page import="core.Companie"%>
 <%@page import="core.DBLinker"%>

@@ -110,7 +110,7 @@ String coada = sdf.format(coada_saptamana_max);
                     Cea mai productiva saptamana
                 </label>
 
-                <input type="text" class="tag" readonly value = "<%= coada+" - "+ cap%>">
+                <input style="width: 200px;" type="text" class="tag" readonly value = "<%= coada+" - "+ cap%>">
 
             </div> 
 

@@ -247,6 +247,10 @@
         box-shadow:0px 10px 50px -20px black;
         text-align:center;
     }
+    
+    .send-mail{
+        cursor: pointer;
+    }
 
     table{
         margin:0 auto;

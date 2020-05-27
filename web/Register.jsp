@@ -1,8 +1,4 @@
-<%-- 
-    Document   : Register
-    Created on : May 10, 2020, 4:51:00 PM
-    Author     : Enache
---%>
+
 
 <%@page import="core.DBLinker"%>
 <%@page import="core.Invitatie"%>

@@ -1,8 +1,4 @@
-<%-- 
-    Document   : Proiect
-    Created on : May 17, 2020, 12:07:46 PM
-    Author     : Enache
---%>
+
 
 <%@page import="core.AngajatProiect"%>
 <%@page import="core.Proiect"%>

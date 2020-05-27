@@ -1,8 +1,3 @@
-<%-- 
-    Document   : Angajati
-    Created on : May 14, 2020, 5:50:15 PM
-    Author     : Ana Dima
---%>
 
 <%@page import="core.Angajat"%>
 <%@page import="java.util.ArrayList"%>

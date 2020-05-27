@@ -1,8 +1,3 @@
-<%-- 
-    Document   : AddProiect
-    Created on : May 14, 2020, 8:03:04 PM
-    Author     : Ana Dima
---%>
 
 
 <%@page import="core.Companie"%>

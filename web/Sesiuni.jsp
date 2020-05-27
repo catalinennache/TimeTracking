@@ -1,8 +1,4 @@
-<%-- 
-    Document   : Sesiuni
-    Created on : May 19, 2020, 11:38:45 AM
-    Author     : Ana Dima
---%>
+
 <%@page import="core.Sesiune"%>
 <%@page import="core.AngajatProiect"%>
 <%@page import="core.Proiect"%>

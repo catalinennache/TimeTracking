@@ -1,8 +1,4 @@
-<%-- 
-    Document   : Angajati
-    Created on : May 14, 2020, 5:50:15 PM
-    Author     : Ana Dima
---%>
+
 
 <%@page import="core.Proiect"%>
 <%@page import="core.Angajat"%>
@@ -33,7 +29,7 @@
 
         <table>
             <thead>
-            <th style="text-align: center;font-size:30px; color: crimson;"> Id Proiect </th>
+            <th style="text-align: center;font-size:30px; color: crimson;"> Cod Proiect </th>
             <th style="text-align: center;font-size:30px; color: crimson;"> Data Creare </th>
             <th style="text-align: center;font-size:30px; color: crimson;"> Nume </th>
             <th style="text-align: center;font-size:30px; color: crimson;"> Control </th>

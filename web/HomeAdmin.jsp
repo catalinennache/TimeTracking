@@ -1,8 +1,4 @@
-<%-- 
-    Document   : HomeAdmin
-    Created on : Apr 28, 2020, 4:21:00 PM
-    Author     : Enache
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
